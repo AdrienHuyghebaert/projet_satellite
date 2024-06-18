@@ -6,7 +6,7 @@ import matplotlib.animation as animation
 # Variables communes
 
 rayon_terre = 6374.2  # Rayon de la Terre en km
-masse_terre = 5.974 * 10 ** 24  # Masse de la Terre en kg
+masse_terre = 5.974 * (10 ** 24)  # Masse de la Terre en kg
 G = 6.67 * 10 ** (-11)  # Constante gravitationnelle universelle
 g = 9.81  # en m/s2
 
@@ -100,6 +100,6 @@ class Satellite:
 # Exemple d'utilisation de la classe Satellite
 satellite = Satellite(256, 145, 0.00012, 56, 50)
 
-print("Rayons de l'ellipse:", satellite.calcul_rayons_ellipse())
-print("Paramètres de l'ellipse:", satellite.calcul_parametres_ellipse())
-satellite.tracer_orbite_3d()
+#print("Rayons de l'ellipse:", satellite.calcul_rayons_ellipse())
+#print("Paramètres de l'ellipse:", satellite.calcul_parametres_ellipse())
+#satellite.tracer_orbite_3d()
