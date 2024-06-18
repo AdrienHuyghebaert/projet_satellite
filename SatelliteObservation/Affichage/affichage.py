@@ -1,0 +1,52 @@
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+
+class AffichageSatellites:
+
+    def __init__(self, nb_points, a, b, e, x_inclined, y_inclined, z_inclined, apogee, perigee, inclinaison, masse):
+        self.nb_points = nb_points
+        self.a = a
+        self.b = b
+        self.e = e
+        self.x_inclined = x_inclined
+        self.y_inclined = y_inclined
+        self.z_inclined = z_inclined
+        self.apogee = apogee
+        self.perigee = perigee
+        self.inclinaison = inclinaison
+        self.masse = masse
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(111, projection='3d')
+        # Tracer l'orbite inclinée
+        self.ax.plot(self.x_inclined, self.y_inclined, self.z_inclined, 'b-', label='Orbite')
+
+        # Position initiale du satellite (à l'apogée)
+        self.satellite, = self.ax.plot([self.x_inclined[-1]], [self.y_inclined[-1]], [self.z_inclined[-1]], 'ro',
+                                       markersize=8)
+
+    def get_data(self):
+
+        # Configuration des limites des axes
+        self.ax.set_xlim(-self.a - 1000, self.a + 1000)
+        self.ax.set_ylim(-self.a - 1000, self.a + 1000)
+        self.ax.set_zlim(-self.b - 1000, self.b + 1000)
+        self.ax.set_aspect('auto')
+
+    def ani_init(self):
+        self.satellite.set_data([], [])
+        self.satellite.set_3d_properties([])
+
+        return self.satellite,
+
+    def ani_update(self, i):
+        self.satellite.set_data([self.x_inclined[i]], [self.y_inclined[i]])
+        self.satellite.set_3d_properties([self.z_inclined[i]])
+
+        return self.satellite,
+
+    def animate(self):
+        anim = animation.FuncAnimation(self.fig, self.ani_update, init_func=self.ani_init, frames=self.nb_points,
+                                interval=20, blit=True)
+        plt.show()
+
