@@ -61,3 +61,4 @@ data = SatelliteObservation.AffichageSatellites(1000,
 
 data.get_data()
 data.animate()
+
