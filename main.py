@@ -1,8 +1,17 @@
 import SatelliteObservation
 
-float = SatelliteObservation.get_float_input('Entrez un float : \n')
-print(float)
-entier = SatelliteObservation.get_int_input('Entrez un entier : \n')
-print(entier)
-str = SatelliteObservation.get_str_input('Entrez un str : \n')
-print(str)
+test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+data = SatelliteObservation.AffichageSatellites(1000,
+                                                SatelliteObservation.Satellite.calcul_parametres_ellipse(test)[0],
+                                                SatelliteObservation.Satellite.calcul_parametres_ellipse(test)[1],
+                                                SatelliteObservation.Satellite.calcul_parametres_ellipse(test)[2],
+                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
+                                                    0],
+                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
+                                                    1],
+                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
+                                                    2],
+                                                256, 145, 56, 50)
+
+data.get_data()
+data.animate()
