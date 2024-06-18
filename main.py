@@ -18,7 +18,7 @@ if __name__ == '__main__':
         if choix_yaml == 0:
             fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml') # instanciation objet
             donnees = fichier_yaml.donnees_satellite()
-            print(donnees[0])
+            print(donnees[0]['perigee'])
 
         # Entrée YAML: TLE
         elif choix_donnees == 1:
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     # Entrée: Base de données (fichier csv)
     elif choix_donnees == 2:
-        numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier:')
+        numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier (5 chiffres):')
         base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)
         print(base.appel_base_donnees())
 
@@ -46,3 +46,6 @@ if __name__ == '__main__':
     satellite.tracer_orbite_3d()
     '''''
 
+dictionnaire ={'Apogee (km)': 256, 'Perigee (km)': 888}
+objet = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv', dictionnaire, ' ')
+print(objet.ajouter_orbite())

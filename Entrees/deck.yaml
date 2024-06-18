@@ -5,6 +5,7 @@
 # Données satellite
 
 Satellite:
+  nom: AISTechSat-2
   numero_NORAD : 52631
   classe_orbite : LEO # (LEO, GEO...)
   masse : 22 # en kg
