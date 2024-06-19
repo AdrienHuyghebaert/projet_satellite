@@ -47,16 +47,39 @@ if __name__ == '__main__':
     satellite.tracer_orbite_3d()
     '''''
 
-test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-data = SatelliteObservation.AffichageOrbiteSatellite(1000,
-                                                     SatelliteObservation.Satellite.calcul_parametres_ellipse(test)[0],
-                                                     SatelliteObservation.Satellite.calcul_parametres_ellipse(test)[1],
-                                                     SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
-                                                         0],
-                                                     SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
-                                                         1],
-                                                     SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)[
-                                                         2],)
+satellite_1 = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+satellite_2 = SatelliteObservation.Satellite(576, 566, 0.00015, 36.9, 40)
+afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
+                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse(
+                                                                    satellite_1)[0],
+                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse(
+                                                                    satellite_1)[1],
+                                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(
+                                                                    satellite_1)[
+                                                                    0],
+                                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(
+                                                                    satellite_1)[
+                                                                    1],
+                                                                SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(
+                                                                    satellite_1)[
+                                                                    2], )
 
-data.get_data()
-data.animate()
+afficher_orbite.get_data()
+afficher_orbite.animate()
+
+# Affichage de plusieurs orbites
+a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
+a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
+a_satellites = np.array([a_sat_1, a_sat_2])
+
+b_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[1]
+b_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[1]
+b_satellites = np.array([b_sat_1, b_sat_2])
+
+positions_sat_1 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_1)[3]
+positions_sat_2 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_2)[3]
+positions_satellites = np.array([positions_sat_1, positions_sat_2])
+
+
+affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, len(positions_satellites), a_satellites, b_satellites)
+affichage.animate()
