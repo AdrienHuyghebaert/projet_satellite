@@ -41,11 +41,12 @@ if __name__ == '__main__':
     print(entier)
     str = SatelliteObservation.get_str_input('Entrez un str : \n')
     print(str)
-    
+
     satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-    
+
     satellite.tracer_orbite_3d()
-    '''''
+   '''''
+
 
 satellite_1 = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
 satellite_2 = SatelliteObservation.Satellite(576, 566, 0.00015, 36.9, 40)
@@ -83,3 +84,13 @@ positions_satellites = np.array([positions_sat_1, positions_sat_2])
 
 affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, len(positions_satellites), a_satellites, b_satellites)
 affichage.animate()
+
+'''
+# Test de la class TraceAntenne
+'''
+# test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+# x_pos, y_pos, z_pos = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)
+# position_sat = [x_pos[567], y_pos[567], z_pos[567]]
+# data = SatelliteObservation.TraceAntenne(position_sat)
+# data.tracer_cercle()
+
