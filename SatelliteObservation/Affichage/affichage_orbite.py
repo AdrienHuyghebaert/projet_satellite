@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 
-class AffichageSatellites:
+class AffichageOrbiteSatellite:
 
     # Récupération des données d'entrée et initialisation de la figure
 
