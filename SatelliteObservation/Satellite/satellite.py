@@ -54,7 +54,8 @@ class Satellite:
         x_inclined = x
         y_inclined = y * np.cos(inclinaison)
         z_inclined = y * np.sin(inclinaison)
-        return x_inclined, y_inclined, z_inclined
+        tableau_positions = np.array([x_inclined, y_inclined, z_inclined])
+        return x_inclined, y_inclined, z_inclined, tableau_positions
 
     def tracer_orbite_3d(self):
         num_points = 1000
