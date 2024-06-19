@@ -64,6 +64,7 @@ class AffichageOrbiteTraceConnection:
         return artists
 
     def animate(self):
+        print(self.nb_satellites)
         self.tracer_orbites()
         self.afficher_terre()
         anim = animation.FuncAnimation(self.fig, self.update_animation, init_func=self.initialiser_animation,

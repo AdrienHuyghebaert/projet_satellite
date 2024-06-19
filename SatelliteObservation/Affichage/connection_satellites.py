@@ -80,7 +80,7 @@ class AffichageConnectionSatellites:
 
 # Exemples d'utilisation
 a = [6145, 6245, 6455]
-b = [-6445, -6445, -6445]
+b = [6445, 6445, -6445]
 
 test = AffichageConnectionSatellites(a, b)
 test.tester_connection()
