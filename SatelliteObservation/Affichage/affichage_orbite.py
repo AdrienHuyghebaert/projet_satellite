@@ -6,18 +6,13 @@ class AffichageOrbiteSatellite:
 
     # Récupération des données d'entrée et initialisation de la figure
 
-    def __init__(self, nb_points, a, b, e, x_inclined, y_inclined, z_inclined, apogee, perigee, inclinaison, masse):
+    def __init__(self, nb_points, a, b, x_inclined, y_inclined, z_inclined):
         self.nb_points = nb_points
         self.a = a
         self.b = b
-        self.e = e
         self.x_inclined = x_inclined
         self.y_inclined = y_inclined
         self.z_inclined = z_inclined
-        self.apogee = apogee
-        self.perigee = perigee
-        self.inclinaison = inclinaison
-        self.masse = masse
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111, projection='3d')
         # Tracer l'orbite inclinée

@@ -22,7 +22,10 @@ class AffichageConnectionSatellites:
     def tester_connection(self):
         """Checks if a line passes through a sphere."""
         distance = self.distance_centre_ligne()
-        return distance <= self.rayon_terre
+        if distance <= self.rayon_terre:
+            print("La droite passe à travers la sphère.")
+        else:
+            self.tracer_connection()
 
     def creer_planete(self):
         # table des points des latitudes et longitudes de la planete
@@ -54,7 +57,7 @@ class AffichageConnectionSatellites:
         z_coord = [self.satellite_1[2], self.satellite_2[2]]
         coord_terre_lon, coord_terre_lat = self.creer_planete()
         # Créer une figure 3D
-        figure_1 = plt.figure(1, figsize=[10, 8])
+        figure_1 = plt.figure()
         ax = figure_1.add_subplot(111, projection='3d')
         # Tracer les points
         ax.scatter(x_coord, y_coord, z_coord, c='r', marker='o')
@@ -80,9 +83,4 @@ a = [6145, 6245, 6455]
 b = [-6445, -6445, -6445]
 
 test = AffichageConnectionSatellites(a, b)
-
-if test.tester_connection():
-    print("La droite passe à travers la sphère.")
-else:
-    print("La droite ne passe pas à travers la sphère.")
-    test.tracer_connection()
+test.tester_connection()
