@@ -41,11 +41,11 @@ if __name__ == '__main__':
     print(entier)
     str = SatelliteObservation.get_str_input('Entrez un str : \n')
     print(str)
-    
+
     satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-    
+
     satellite.tracer_orbite_3d()
-    '''''
+   '''''
 
 test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
 data = SatelliteObservation.AffichageOrbiteSatellite(1000,
@@ -62,3 +62,12 @@ data = SatelliteObservation.AffichageOrbiteSatellite(1000,
 
 data.get_data()
 data.animate()
+
+'''
+# Test de la class TraceAntenne
+'''
+# test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+# x_pos, y_pos, z_pos = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)
+# position_sat = [x_pos[567], y_pos[567], z_pos[567]]
+# data = SatelliteObservation.TraceAntenne(position_sat)
+# data.tracer_cercle()
