@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from .affichage_terre import *
@@ -18,8 +19,12 @@ class AffichageOrbiteTraceConnection:
         self.ax = self.fig.add_subplot(111, projection='3d')
         self.satellites = []
 
-        # Positions initiales satellites à l'apogée
+        # Décalage aléatoire des positions initiales des satellites
         for i in range(self.nb_satellites):
+            decalage = np.random.randint(self.nb_points)
+            # Décalage circulaire des positions avec np.roll (CHAT.GPT)
+            self.positions_satellites[i] = np.roll(self.positions_satellites[i], -decalage, axis=1)
+            # Plot initial du satellite à la nouvelle position décalée
             satellite, = self.ax.plot([self.positions_satellites[i, 0, -1]],
                                       [self.positions_satellites[i, 1, -1]],
                                       [self.positions_satellites[i, 2, -1]], 'ro',
