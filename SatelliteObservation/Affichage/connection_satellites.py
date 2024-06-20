@@ -16,7 +16,7 @@ class AffichageConnectionSatellites:
         point2 = np.array(self.satellite_2)
         vect_droite = point2 - point1
         vect_centre = centre - point1
-        distance = np.linalg.norm(np.cross(vect_droite, vect_centre)) / (np.linalg.norm(vect_centre))
+        distance = np.linalg.norm(np.cross(vect_droite, vect_centre)) / np.linalg.norm(vect_centre)
         return distance
 
     def tester_connection(self):
@@ -25,7 +25,7 @@ class AffichageConnectionSatellites:
         if distance <= self.rayon_terre:
             print("La droite passe à travers la sphère.")
         else:
-            self.tracer_connection()
+            self.tracer_connexion()
 
     def creer_planete(self):
         # table des points des latitudes et longitudes de la planete
@@ -51,7 +51,7 @@ class AffichageConnectionSatellites:
 
         return longs, lats
 
-    def tracer_connection(self):
+    def tracer_connexion(self):
         x_coord = [self.satellite_1[0], self.satellite_2[0]]
         y_coord = [self.satellite_1[1], self.satellite_2[1]]
         z_coord = [self.satellite_1[2], self.satellite_2[2]]
@@ -79,8 +79,8 @@ class AffichageConnectionSatellites:
 
 
 # Exemples d'utilisation
-a = [6145, 6245, 6455]
-b = [6445, 6445, -6445]
+a = [6145, 6245, 6355]
+b = [-6445, 6345, -6445]
 
 test = AffichageConnectionSatellites(a, b)
 test.tester_connection()

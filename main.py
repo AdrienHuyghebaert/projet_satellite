@@ -47,7 +47,7 @@ if __name__ == '__main__':
     satellite.tracer_orbite_3d()
    '''''
 
-satellite_1 = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+satellite_1 = SatelliteObservation.Satellite(912, 880, 0.00012, 67, 50)
 satellite_2 = SatelliteObservation.Satellite(576, 566, 0.00015, 36.9, 40)
 satellite_3 = SatelliteObservation.Satellite(956, 897, 0.00015, 72, 40)
 '''
@@ -86,10 +86,10 @@ positions_sat_3 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(s
 positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3])
 
 # Paramètre qui permet d'afficher ou non les connexions entre les satellites
-afficher_connexions = False
-
+afficher_connexions = True
+afficher_terre = False
 affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, len(positions_satellites),
-                                                                a_satellites, b_satellites, afficher_connexions)
+                                                                a_satellites, b_satellites, afficher_connexions, afficher_terre)
 affichage.animate()
 
 '''
