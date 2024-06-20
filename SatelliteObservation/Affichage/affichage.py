@@ -7,7 +7,7 @@ centre_terre = np.array([0, 0, 0])
 
 
 class AffichageOrbiteTraceConnection:
-    def __init__(self, positions_satellites, nb_satellites, a_satellites, b_satellites):
+    def __init__(self, positions_satellites, nb_satellites, a_satellites, b_satellites, afficher_connexions):
         self.nb_points = 1000
         self.positions_satellites = np.array(positions_satellites)  # Convertir en tableau Numpy
         self.nb_satellites = nb_satellites
@@ -18,7 +18,7 @@ class AffichageOrbiteTraceConnection:
         self.satellites = []
         self.binomes_satellites = []  # Liste des connexions entre les satellites
         self.lignes_connexion = {}  # Dictionnaire pour stocker les lignes de connexion
-        self.afficher_connexions = False  # Paramètre pour gérer ou non l'affichage des connexions
+        self.afficher_connexions = afficher_connexions  # Paramètre pour gérer ou non l'affichage des connexions
 
         # Initialisation des positions initiales des satellites avec un décalage aléatoire
         for i in range(self.nb_satellites):
