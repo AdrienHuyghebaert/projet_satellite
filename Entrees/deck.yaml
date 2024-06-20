@@ -5,15 +5,18 @@
 # Données satellite
 
 Satellite:
-  nom: AISTechSat-2
-  numero_NORAD : 52631
-  classe_orbite : LEO # (LEO, GEO...)
-  masse : 22 # en kg
+  Nom_Satellite: AISTechSat-2
+  Numero_NORAD : 52631
+  Masse : 22 # en kg
 Orbite:
-  perigee: 576 # en km
-  apogee: 600 # en km
-  e: 0.00052 # en km
-  inclinaison : 45 # en deg
+  Classe_Orbite: LEO # (LEO, GEO...)
+  Type_Orbite: Sun-Synchronous
+  Longitude (deg): 56
+  Perigee (km): 576 # en km
+  Apogee (km): 600 # en km
+  Excentricite: 0.00052 # en km
+  Inclinaison (deg) : 45 # en deg
+  Periode : 15
 
 
 

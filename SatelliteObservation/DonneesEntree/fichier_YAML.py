@@ -14,6 +14,7 @@ class Lire_YAML:
     def __init__(self, nom_fichier):
         self.nom_fichier = nom_fichier
 
+# Lit le fichier deck.yaml: ============================================================================================
     def lecture_fichier(self):
         # Récupération des données du YAML
         from SatelliteObservation.DonneesEntree.LecteurYAML import LecteurYAML
@@ -34,6 +35,7 @@ class Lire_YAML:
         #     print(f"- {value} est de type {type(value)}")
         return parsed_data
 
+# Récupère les données du YAML sous forme de dictionnaire: =============================================================
     def donnees_satellite(self):
         parsed_data = self.lecture_fichier()
 
@@ -42,10 +44,11 @@ class Lire_YAML:
         donnes_orbite = parsed_data["Orbite"]
         return donnes_orbite, donnees_satellite
 
-
+# Récupère les données TLE du YAML: ====================================================================================
     def donnees_TLE(self):
 
         # Récupération des données
+
         parsed_data = self.lecture_fichier()
         ligne_1 = parsed_data["TLE_ligne1"].split()
         ligne_2 = parsed_data["TLE_ligne2"].split()
@@ -53,23 +56,20 @@ class Lire_YAML:
         classe_sat = str(ligne_1[1][-1])
         inclinaison = float(ligne_2[2])
         nbr_revolution = float(ligne_2[7])
-        e = float(ligne_2[4]) * 0.0000001
+        # Traitement de la donnée d'excentricite
+        e_brut = float(ligne_2[4])
+        nombre_caracteres = len(str(e_brut))
+        excentricite = e_brut * (10**(-(nombre_caracteres+1)))
 
         # Calcul des paramètres à partir des données TLE
 
-
-        periode = (1440 / nbr_revolution) * 60 # période orbitale en s
-        mu = G * masse_terre # on fait l'hypothèse que masse satellite << masse terre
-        a = (mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3) # calcul du demi grand axe en km
-        r_p = a * (1 - e) # rayon périgée en km
-        r_a = a * (1 + e) # rayon apogée en km
+        periode = (1440 / nbr_revolution) * 60  # période orbitale en s
+        mu = G * masse_terre  # on fait l'hypothèse que masse satellite << masse terre
+        a = (mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3)  # calcul du demi grand axe en km
+        r_p = a * (1 - excentricite)  # rayon périgée en km
+        r_a = a * (1 + excentricite)  # rayon apogée en km
 
         # Création de tableaux de variables d'entrées:
-        donnees_satellite_TLE = np.array([numero_sat, classe_sat])
-        donnees_orbite_TLE = np.array([a, e, r_p, r_a, inclinaison])
+        donnees_satellite_orbite_TLE = np.array([numero_sat, classe_sat, a, excentricite, r_p, r_a, inclinaison])
 
-        return donnees_satellite_TLE, donnees_orbite_TLE
-
-
-
-
+        return donnees_satellite_orbite_TLE
