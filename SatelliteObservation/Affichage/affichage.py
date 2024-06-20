@@ -18,6 +18,7 @@ class AffichageOrbiteTraceConnection:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111, projection='3d')
         self.satellites = []
+        self.connexion_line = None  # Attribut pour stocker la ligne de connexion
 
         # Décalage aléatoire des positions initiales des satellites
         for i in range(self.nb_satellites):
@@ -30,6 +31,9 @@ class AffichageOrbiteTraceConnection:
                                       [self.positions_satellites[i, 2, -1]], 'ro',
                                       markersize=8)
             self.satellites.append(satellite)
+
+        # Initialisation de la ligne de connexion entre le premier et le deuxième satellite
+        self.tracer_droite_entre_satellites(0, 1)
 
     def afficher_terre(self):
         coord_terre_lon, coord_terre_lat = afficher_terre()
@@ -51,6 +55,17 @@ class AffichageOrbiteTraceConnection:
         self.ax.set_zlim(-max_b - 1000, max_b + 1000)
         self.ax.set_aspect('auto')
 
+    def tracer_droite_entre_satellites(self, satellite1_idx, satellite2_idx):
+        x_coords = [self.positions_satellites[satellite1_idx, 0, -1], self.positions_satellites[satellite2_idx, 0, -1]]
+        y_coords = [self.positions_satellites[satellite1_idx, 1, -1], self.positions_satellites[satellite2_idx, 1, -1]]
+        z_coords = [self.positions_satellites[satellite1_idx, 2, -1], self.positions_satellites[satellite2_idx, 2, -1]]
+
+        if self.connexion_line is None:
+            self.connexion_line, = self.ax.plot(x_coords, y_coords, z_coords, 'g--', linewidth=2)
+        else:
+            self.connexion_line.set_data(x_coords, y_coords)
+            self.connexion_line.set_3d_properties(z_coords)
+
     def initialiser_animation(self):
         for satellite in self.satellites:
             satellite.set_data([], [])
@@ -59,13 +74,32 @@ class AffichageOrbiteTraceConnection:
 
     def update_animation(self, n):
         artists = []
+
+        # Mise à jour des positions des satellites
         for i in range(self.nb_satellites):
             x = self.positions_satellites[i, 0, n]
             y = self.positions_satellites[i, 1, n]
             z = self.positions_satellites[i, 2, n]
+
             self.satellites[i].set_data([x], [y])
             self.satellites[i].set_3d_properties([z])
             artists.append(self.satellites[i])
+
+        # Mettre à jour la ligne de connexion entre le premier et le deuxième satellite
+        satellite1_idx = 0
+        satellite2_idx = 1
+        x_coords = [self.positions_satellites[satellite1_idx, 0, n], self.positions_satellites[satellite2_idx, 0, n]]
+        y_coords = [self.positions_satellites[satellite1_idx, 1, n], self.positions_satellites[satellite2_idx, 1, n]]
+        z_coords = [self.positions_satellites[satellite1_idx, 2, n], self.positions_satellites[satellite2_idx, 2, n]]
+
+        if self.connexion_line is None:
+            self.connexion_line, = self.ax.plot(x_coords, y_coords, z_coords, 'g-', linewidth=2)
+        else:
+            self.connexion_line.set_data(x_coords, y_coords)
+            self.connexion_line.set_3d_properties(z_coords)
+
+        artists.append(self.connexion_line)  # Ajouter la ligne de connexion aux artistes à redessiner
+
         return artists
 
     def animate(self):
