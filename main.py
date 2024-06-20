@@ -50,6 +50,7 @@ if __name__ == '__main__':
 satellite_1 = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
 satellite_2 = SatelliteObservation.Satellite(576, 566, 0.00015, 36.9, 40)
 satellite_3 = SatelliteObservation.Satellite(956, 897, 0.00015, 72, 40)
+'''
 afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
                                                                 SatelliteObservation.Satellite.calcul_parametres_ellipse
                                                                 (satellite_1)[0],
@@ -67,7 +68,7 @@ afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
 
 afficher_orbite.get_data()
 afficher_orbite.animate()
-
+'''
 # Affichage de plusieurs orbites
 a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
 a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
