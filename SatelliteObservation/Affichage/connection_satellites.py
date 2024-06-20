@@ -5,10 +5,27 @@ import matplotlib.pyplot as plt
 class AffichageConnectionSatellites:
 
     def __init__(self, satellite_1, satellite_2):
-        self.satellite_1 = np.array(satellite_1)
-        self.satellite_2 = np.array(satellite_2)
+        self.satellite_1 = satellite_1
+        self.satellite_2 = satellite_2
         self.centre_terre = [0, 0, 0]
         self.rayon_terre = 6371
+
+    def distance_centre_ligne(self):
+        centre = np.array(self.centre_terre)
+        point1 = np.array(self.satellite_1)
+        point2 = np.array(self.satellite_2)
+        vect_droite = point2 - point1
+        vect_centre = centre - point1
+        distance = np.linalg.norm(np.cross(vect_droite, vect_centre)) / (np.linalg.norm(vect_centre))
+        return distance
+
+    def tester_connection(self):
+        """Checks if a line passes through a sphere."""
+        distance = self.distance_centre_ligne()
+        if distance <= self.rayon_terre:
+            print("La droite passe à travers la sphère.")
+        else:
+            self.tracer_connection()
 
     def creer_planete(self):
         # table des points des latitudes et longitudes de la planete
@@ -61,26 +78,9 @@ class AffichageConnectionSatellites:
         plt.show()
 
 
-    def projeter_point_droite(self):
-        point = np.zeros(3)
-        point_droite = np.array(self.satellite_1)
-        vect = np.array(self.satellite_2-self.satellite_1)
-
-        projection = point_droite + np.dot(point - point_droite, vect) / np.dot(vect, vect) * vect
-
-        return projection
-
-    def test_distance(self):
-        projection_centre = self.projeter_point_droite()
-        if np.linalg.norm(projection_centre) > self.rayon_terre:
-            self.tracer_connection()
-        else:
-            print('C..n..ti.._ann.l..')
-
-
 # Exemples d'utilisation
 a = [6145, 6245, 6455]
-b = [6145, 567, -6445]
+b = [6445, 6445, -6445]
 
 test = AffichageConnectionSatellites(a, b)
-test.test_distance()
+test.tester_connection()
