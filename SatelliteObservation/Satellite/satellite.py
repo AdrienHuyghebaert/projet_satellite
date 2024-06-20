@@ -32,7 +32,8 @@ class Satellite:
         r_a, r_p = self.calcul_rayons_ellipse()
         a = (r_a + r_p) / 2  # Demi-grand axe
         e = (r_a - r_p) / (r_a + r_p)  # Excentricité
-        b = a * np.sqrt(1 - e ** 2)  # Demi-petit axe
+        b = a * np.sqrt(1 - e**2)  # Demi-petit axe
+        print(a, b, e)
         return a, b, e
 
     def conversion_deg_to_rad(self):
@@ -43,9 +44,10 @@ class Satellite:
         num_points = 1000
         t = np.linspace(0, 2 * np.pi, num_points)
         a, b, e = self.calcul_parametres_ellipse()
-        x = a * np.cos(t)
+        x = a * np.cos(t) + a - self.calcul_parametres_ellipse()[1]
         y = b * np.sin(t)
         z = np.zeros_like(x)
+
         return x, y, z
 
     def calcul_coord_ellipse_inclinee(self):
@@ -60,7 +62,7 @@ class Satellite:
     def tracer_orbite_3d(self):
         num_points = 1000
         a, b, e = self.calcul_parametres_ellipse()
-        x_inclined, y_inclined, z_inclined = self.calcul_coord_ellipse_inclinee()
+        x_inclined, y_inclined, z_inclined = self.calcul_coord_ellipse_inclinee()[:3]
 
         # Animation de la position du satellite le long de l'orbite
         fig = plt.figure()
@@ -98,8 +100,8 @@ class Satellite:
 
 
 # Exemple d'utilisation de la classe Satellite
-satellite = Satellite(256, 145, 0.00012, 56, 50)
-
-#print("Rayons de l'ellipse:", satellite.calcul_rayons_ellipse())
-#print("Paramètres de l'ellipse:", satellite.calcul_parametres_ellipse())
-#satellite.tracer_orbite_3d()
+# satellite = Satellite(200100, 400, 0.9, 45, 50)
+#
+# print("Rayons de l'ellipse:", satellite.calcul_rayons_ellipse())
+# print("Paramètres de l'ellipse:", satellite.calcul_parametres_ellipse())
+# satellite.tracer_orbite_3d()
