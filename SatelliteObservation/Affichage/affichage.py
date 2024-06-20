@@ -16,8 +16,9 @@ class AffichageOrbiteTraceConnection:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111, projection='3d')
         self.satellites = []
-        self.satellite_connections = []  # Liste des connexions entre les satellites
-        self.connection_lines = {}  # Dictionnaire pour stocker les lignes de connexion
+        self.binomes_satellites = []  # Liste des connexions entre les satellites
+        self.lignes_connexion = {}  # Dictionnaire pour stocker les lignes de connexion
+        self.afficher_connexions = False  # Paramètre pour gérer ou non l'affichage des connexions
 
         # Initialisation des positions initiales des satellites avec un décalage aléatoire
         for i in range(self.nb_satellites):
@@ -30,10 +31,11 @@ class AffichageOrbiteTraceConnection:
             self.satellites.append(satellite)
 
         # Initialisation des connexions entre les satellites
-        for i in range(self.nb_satellites):
-            for j in range(i + 1, self.nb_satellites):  # Éviter les connexions doubles et les auto-connexions
-                self.satellite_connections.append((i, j))  # Ajouter chaque couple unique de satellites
-                self.tracer_droite_entre_satellites(i, j)  # Créer la ligne initiale entre les 2 satellites
+        if self.afficher_connexions:  # Si True alors on rentre
+            for i in range(self.nb_satellites):
+                for j in range(i + 1, self.nb_satellites):  # Éviter les connexions doubles et les auto-connexions
+                    self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
+                    self.tracer_droite_entre_satellites(i, j)  # Créer la ligne initiale entre les 2 satellites
 
     def afficher_terre(self):
         coord_terre_lon, coord_terre_lat = afficher_terre()
@@ -61,7 +63,7 @@ class AffichageOrbiteTraceConnection:
 
         # Création de la nouvelle ligne (ou MAJ) de la ligne dans le dictionnaire
         line, = self.ax.plot(x_coords, y_coords, z_coords, 'g-', linewidth=2)
-        self.connection_lines[(satellite1_idx, satellite2_idx)] = line
+        self.lignes_connexion[(satellite1_idx, satellite2_idx)] = line
 
     def initialiser_animation(self):
         for satellite in self.satellites:
@@ -82,20 +84,21 @@ class AffichageOrbiteTraceConnection:
             self.satellites[i].set_3d_properties([z])
             artists.append(self.satellites[i])
 
-        # Mettre à jour toutes les lignes de connexion entre les satellites
-        # en parcourant chaque binôme
-        for connection in self.satellite_connections:
-            satellite1_idx, satellite2_idx = connection
-            x_coords = [self.positions_satellites[satellite1_idx, 0, n],
-                        self.positions_satellites[satellite2_idx, 0, n]]
-            y_coords = [self.positions_satellites[satellite1_idx, 1, n],
-                        self.positions_satellites[satellite2_idx, 1, n]]
-            z_coords = [self.positions_satellites[satellite1_idx, 2, n],
-                        self.positions_satellites[satellite2_idx, 2, n]]
+        if self.afficher_connexions:
+            # Mettre à jour toutes les lignes de connexion entre les satellites
+            # en parcourant chaque binôme
+            for connection in self.binomes_satellites:
+                satellite1_idx, satellite2_idx = connection
+                x_coords = [self.positions_satellites[satellite1_idx, 0, n],
+                            self.positions_satellites[satellite2_idx, 0, n]]
+                y_coords = [self.positions_satellites[satellite1_idx, 1, n],
+                            self.positions_satellites[satellite2_idx, 1, n]]
+                z_coords = [self.positions_satellites[satellite1_idx, 2, n],
+                            self.positions_satellites[satellite2_idx, 2, n]]
 
-            self.connection_lines[(satellite1_idx, satellite2_idx)].set_data(x_coords, y_coords)
-            self.connection_lines[(satellite1_idx, satellite2_idx)].set_3d_properties(z_coords)
-            artists.append(self.connection_lines[(satellite1_idx, satellite2_idx)])
+                self.lignes_connexion[(satellite1_idx, satellite2_idx)].set_data(x_coords, y_coords)
+                self.lignes_connexion[(satellite1_idx, satellite2_idx)].set_3d_properties(z_coords)
+                artists.append(self.lignes_connexion[(satellite1_idx, satellite2_idx)])
 
         return artists
 
