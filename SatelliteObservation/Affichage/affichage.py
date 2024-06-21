@@ -4,27 +4,28 @@ from .affichage_terre import *
 
 rayon_terre = 6371
 centre_terre = np.zeros(3)
+nb_points = 1000
 
 
 class AffichageOrbiteTraceConnection:
-    def __init__(self, positions_satellites, nb_satellites, a_satellites, b_satellites, aff_connexions, aff_terre):
-        self.nb_points = 1000
-        self.positions_satellites = np.array(positions_satellites)  # Convertir en tableau Numpy
-        self.nb_satellites = nb_satellites
+    def __init__(self, positions_satellites, a_satellites, b_satellites, aff_connexions, aff_terre):
+        self.positions_satellites = positions_satellites
         self.a_satellites = a_satellites
         self.b_satellites = b_satellites
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111, projection='3d')
-        self.satellites = []
-        self.binomes_satellites = []  # Liste des connexions entre les satellites
-        self.lignes_connexion = {}  # Dictionnaire pour stocker les lignes de connexion
         self.aff_connexions = aff_connexions  # Paramètre pour gérer ou non l'affichage des connexions
         self.aff_terre = aff_terre  # Paramètre pour gérer ou non l'affichage de la Terre
 
+        self.satellites = []  # Liste pour stocker les satellites
+        self.binomes_satellites = []  # Liste des connexions entre les satellites
+        self.lignes_connexion = {}  # Dictionnaire pour stocker les lignes de connexion
+
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(111, projection='3d')
+
         # Initialisation des positions initiales des satellites avec un décalage aléatoire
-        for i in range(self.nb_satellites):
-            self.decalage = np.random.randint(self.nb_points)
-            self.positions_satellites[i] = np.roll(self.positions_satellites[i], -self.decalage, axis=1)  # CHAT.GPT
+        for i in range(len(self.positions_satellites)):
+            self.decalage = np.random.randint(nb_points)
+            self.positions_satellites[i] = np.roll(self.positions_satellites[i], -self.decalage, axis=1)
             satellite, = self.ax.plot([self.positions_satellites[i, 0, -1]],
                                       [self.positions_satellites[i, 1, -1]],
                                       [self.positions_satellites[i, 2, -1]], 'ro',
@@ -33,8 +34,8 @@ class AffichageOrbiteTraceConnection:
 
         # Initialisation des connexions entre les satellites
         if self.aff_connexions:  # Si True alors on rentre
-            for i in range(self.nb_satellites):
-                for j in range(i + 1, self.nb_satellites):  # Éviter les connexions doubles et les auto-connexions
+            for i in range(len(self.positions_satellites)):
+                for j in range(i + 1, len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
                     self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
                     self.tracer_droite_entre_satellites(i, j)  # Créer la ligne initiale entre les 2 satellites
 
@@ -46,7 +47,7 @@ class AffichageOrbiteTraceConnection:
             self.ax.plot(x, y, z, '-k')
 
     def tracer_orbites(self):
-        for i in range(self.nb_satellites):
+        for i in range(len(self.positions_satellites)):
             self.ax.plot(self.positions_satellites[i, 0], self.positions_satellites[i, 1],
                          self.positions_satellites[i, 2], 'b-', label='Orbite')
 
@@ -67,21 +68,20 @@ class AffichageOrbiteTraceConnection:
         self.lignes_connexion[(satellite1_idx, satellite2_idx)] = line
 
     def tester_connexion_satellites(self, position_sat_1, position_sat_2):
-        # On défini le centre de la Terre à projeter sur la droite de connection entre les satellites
+        # On définit le centre de la Terre à projeter sur la droite de connection entre les satellites
         point_centre = centre_terre
         point_droite = np.array(position_sat_1)
 
         # On définit la droite de connection entre les satellites
         vect = np.array(position_sat_2 - position_sat_1)
 
-        # On projete le point sur la droite et on récupère ses coordonnées
+        # On projette le point sur la droite et on récupère ses coordonnées
         projection = point_droite + np.dot(point_centre - point_droite, vect) / np.dot(vect, vect) * vect
 
-        # On calcul la distance entre le centre et le point projete
+        # On calcule la distance entre le centre et le point projette
         distance = np.linalg.norm(projection - point_centre)
 
         return distance
-
 
     def initialiser_animation(self):
         for satellite in self.satellites:
@@ -95,7 +95,7 @@ class AffichageOrbiteTraceConnection:
         artists = []
 
         # Mise à jour des positions des satellites
-        for i in range(self.nb_satellites):
+        for i in range(len(self.positions_satellites)):
             x = self.positions_satellites[i, 0, n]
             y = self.positions_satellites[i, 1, n]
             z = self.positions_satellites[i, 2, n]
@@ -136,5 +136,5 @@ class AffichageOrbiteTraceConnection:
         if self.aff_terre:
             self.afficher_terre()
         anim = animation.FuncAnimation(self.fig, self.update_animation, init_func=self.initialiser_animation,
-                                       frames=self.nb_points, interval=20, blit=True)
+                                       frames=nb_points, interval=20, blit=True)
         plt.show()

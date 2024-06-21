@@ -33,7 +33,6 @@ class Satellite:
         a = (r_a + r_p) / 2  # Demi-grand axe
         e = (r_a - r_p) / (r_a + r_p)  # Excentricité
         b = a * np.sqrt(1 - e**2)  # Demi-petit axe
-        print(a, b, e)
         return a, b, e
 
     def conversion_deg_to_rad(self):

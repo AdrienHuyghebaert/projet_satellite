@@ -88,8 +88,9 @@ positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat
 # Paramètre qui permet d'afficher ou non les connexions entre les satellites
 afficher_connexions = True
 afficher_terre = True
-affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, len(positions_satellites),
-                                                                a_satellites, b_satellites, afficher_connexions, afficher_terre)
+
+affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, a_satellites, b_satellites,
+                                                                afficher_connexions, afficher_terre)
 affichage.animate()
 
 '''
