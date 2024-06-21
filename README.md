@@ -1,11 +1,14 @@
-# projet_satellite
-Projet final du cours MGA802 de l'ETS
+# Projet_Satellite
+### Projet final du cours MGA802 de l'ETS ###
+
+Auteurs: ADRIEN HUYGHEBAERT - BAPTISTE ROUANET - CLELIA DURANDET
 
 **Objectifs :** 
 
 Tracer l'orbite de plusieurs satellites ainsi que :
 - la trace de leur antenne au sol
 - la potentielle connection entre 2 satellites
+- mettre à jour la base de données
 
 Tout cela est fait à partir données d'orbites fournis par l'utilisateur ou à partir d'une base de données déjà présente dans le Git. 
 
@@ -42,3 +45,28 @@ Comme une image est toujours plus explicite voici les fonctionnalitées impléme
 
 ![image](https://github.com/AdrienHuyghebaert/projet_satellite/assets/169941933/cb1d38ac-24db-4362-b99e-c9965fc6975c)
 
+**Données d'entrée**
+- fichier deck.yaml
+    - données satellite en vrac
+    - données TLE (2 lignes)
+- base de données fournie: https://www.ucsusa.org/resources/satellite-database
+
+**Données de sortie**
+
+
+
+
+**Structure du code**
+
+Le code contient les packages et les classes suivants:
+
+- DonneesEntree
+  - ajouter_mettre_a_jour_orbite: permet à l'utilisateur d'ajouter les données d'une orbite de satellite dans la base de données ou de modifier les données d'un satellite déjà dans la base
+  - base_donnee: permet d'extraire les données d'orbite d'un satellite selon son numéro d'identification NORAD
+  - fichier_YAML: permet de lire le fichier YAML et d'extraire les données pour leur utilisation
+- Satellite
+    - satellite: effectue les calculs des paramètres de l'orbite elliptique à partir des données brutes de la base de données
+- ExtraFunctions
+    - choix_donnees_entree: fonction qui permet de renvoyer des tableaux de données des satellites selon le type de données d'entrée choisie par l'utilisateur 
+    - get_user_input: fonction qui permet de récupérer les entrées de l'utilisateur dans la console selon le type (str, int, float)
+- Affichage
