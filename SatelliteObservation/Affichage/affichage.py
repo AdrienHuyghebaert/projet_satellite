@@ -37,7 +37,7 @@ class AffichageOrbiteTraceConnection:
             for i in range(len(self.positions_satellites)):
                 for j in range(i + 1, len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
                     self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
-                    self.tracer_droite_entre_satellites(i, j)  # Créer la ligne initiale entre les 2 satellites
+                    self.tracer_connexion_entre_satellites(i, j)  # Créer la ligne initiale entre les 2 satellites
 
     def afficher_terre(self):
         coord_terre_lon, coord_terre_lat = afficher_terre()
@@ -58,7 +58,7 @@ class AffichageOrbiteTraceConnection:
         self.ax.set_zlim(-max_b - 1000, max_b + 1000)
         self.ax.set_aspect('auto')
 
-    def tracer_droite_entre_satellites(self, satellite1_idx, satellite2_idx):
+    def tracer_connexion_entre_satellites(self, satellite1_idx, satellite2_idx):
         x_coords = [self.positions_satellites[satellite1_idx, 0, -1], self.positions_satellites[satellite2_idx, 0, -1]]
         y_coords = [self.positions_satellites[satellite1_idx, 1, -1], self.positions_satellites[satellite2_idx, 1, -1]]
         z_coords = [self.positions_satellites[satellite1_idx, 2, -1], self.positions_satellites[satellite2_idx, 2, -1]]
