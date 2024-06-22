@@ -1,4 +1,6 @@
 import matplotlib.animation as animation
+from matplotlib import pyplot as plt
+
 from .terre import *
 from .connexion_satellites import *
 

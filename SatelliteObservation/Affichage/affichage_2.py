@@ -5,7 +5,6 @@ from .terre_2 import *
 from .orbite import *
 
 # Constantes
-
 nb_points = 1000
 
 
@@ -20,7 +19,7 @@ class AffichageOrbiteTraceConnexion2:
 
         self.satellites = []  # Liste pour stocker les satellites
         self.binomes_satellites = []  # Liste des connexions entre les satellites
-        self.lignes_connexion = {}  # Dictionnaire pour stocker les lignes de connexion
+        self.lignes_connexion = {}  # Dictionnaire pour stocker le binome de satellite et son objet connexion
 
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111, projection='3d')
@@ -84,7 +83,7 @@ class AffichageOrbiteTraceConnexion2:
     def update_animation(self, n):
         artists = []
 
-        # Mise à jour des positions des satellites
+        # Mettre à jour les positions des satellites
         for i in range(len(self.positions_satellites)):
             x = self.positions_satellites[i, 0, n]
             y = self.positions_satellites[i, 1, n]

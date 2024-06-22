@@ -50,7 +50,7 @@ if __name__ == '__main__':
 satellite_1 = SatelliteObservation.Satellite(10, 10500, 0.9, 5, 50)
 satellite_2 = SatelliteObservation.Satellite(30006, 6, 0.8, 36.9, 40)
 satellite_3 = SatelliteObservation.Satellite(956, 897, 0.7, 90, 4000)
-satellite_4 = SatelliteObservation.Satellite(720, 12, 0.7, 12, 4000)
+satellite_4 = SatelliteObservation.Satellite(720, 12, 0.7, 12, 12)
 '''
 afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
                                                                 SatelliteObservation.Satellite.calcul_parametres_ellipse
