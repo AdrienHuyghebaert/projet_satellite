@@ -1,21 +1,22 @@
 import matplotlib.animation as animation
 from matplotlib import pyplot as plt
-import numpy as np
 from .connexion_satellites import ConnexionSatellites
-from .affichage_terre import afficher_terre
+from .terre_2 import *
+from .orbite import *
 
-#Constantes
+# Constantes
 
 nb_points = 1000
 
 
 class AffichageOrbiteTraceConnexion2:
-    def __init__(self, positions_satellites, a_satellites, b_satellites, aff_connexions, aff_terre):
+    def __init__(self, positions_satellites, a_satellites, b_satellites, aff_connexions, aff_terre, aff_orbite):
         self.positions_satellites = positions_satellites
         self.a_satellites = a_satellites
         self.b_satellites = b_satellites
         self.aff_connexions = aff_connexions  # Paramètre pour gérer ou non l'affichage des connexions
         self.aff_terre = aff_terre  # Paramètre pour gérer ou non l'affichage de la Terre
+        self.aff_orbite = aff_orbite  # Paramètre pour gérer ou non l'affichage des orbites
 
         self.satellites = []  # Liste pour stocker les satellites
         self.binomes_satellites = []  # Liste des connexions entre les satellites
@@ -37,23 +38,15 @@ class AffichageOrbiteTraceConnexion2:
         # Création des objets ConnexionSatellites
         if self.aff_connexions:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):
-                for j in range(i + 1, len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
+                for j in range(i + 1,
+                               len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
                     self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
                     connexion = ConnexionSatellites((i, j), self.positions_satellites)  # Création de l'objet connexion
                     self.lignes_connexion[(i, j)] = connexion  # Ajout de l'objet connexion dans le dictionnaire
 
-    def afficher_terre(self):
-        coord_terre_lon, coord_terre_lat = afficher_terre()
-        for x, y, z in coord_terre_lon:
-            self.ax.plot(x, y, z, '-k')
-        for x, y, z in coord_terre_lat:
-            self.ax.plot(x, y, z, '-k')
+    def initialiser_animation(self):
 
-    def tracer_orbites(self):
-        for i in range(len(self.positions_satellites)):
-            self.ax.plot(self.positions_satellites[i, 0], self.positions_satellites[i, 1],
-                         self.positions_satellites[i, 2], 'b-', label='Orbite')
-
+        # Définition des bornes d'affichage
         max_a = np.max(self.a_satellites)
         max_b = np.max(self.b_satellites)
         self.ax.set_xlim(-max_a - 1000, max_a + 1000)
@@ -61,7 +54,6 @@ class AffichageOrbiteTraceConnexion2:
         self.ax.set_zlim(-max_b - 1000, max_b + 1000)
         self.ax.set_aspect('auto')
 
-    def initialiser_animation(self):
         artists = []
 
         # Initialisation animation des satellites
@@ -76,6 +68,17 @@ class AffichageOrbiteTraceConnexion2:
                 line = self.lignes_connexion[connexion].tracer_connexion_entre_satellites(self.ax)
                 artists.append(line)
 
+        # Affichage de la Terre
+        if self.aff_terre:
+            terre = Terre()
+            lines = terre.afficher_terre(self.ax)
+            artists.append(lines)
+
+        # Affichage des orbites
+        if self.aff_orbite:
+            orbites = Orbite(self.positions_satellites)
+            lines = orbites.tracer_orbites(self.ax)
+            artists.append(lines)
         return artists
 
     def update_animation(self, n):
@@ -100,9 +103,6 @@ class AffichageOrbiteTraceConnexion2:
         return artists
 
     def animate(self):
-        self.tracer_orbites()
-        if self.aff_terre:
-            self.afficher_terre()
         anim = animation.FuncAnimation(self.fig, self.update_animation, init_func=self.initialiser_animation,
                                        frames=nb_points, interval=20, blit=True)
         plt.show()

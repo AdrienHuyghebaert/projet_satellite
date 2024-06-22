@@ -5,6 +5,7 @@ from mpl_toolkits.mplot3d.art3d import Line3D
 centre_terre = np.zeros(3)
 rayon_terre = 6371
 
+
 class ConnexionSatellites:
 
     def __init__(self, binome, positions_satellites):
@@ -14,14 +15,17 @@ class ConnexionSatellites:
         self.line = None
 
     def tracer_connexion_entre_satellites(self, ax):
-        x_coords = [self.positions_satellites[self.satellite_1, 0, -1], self.positions_satellites[self.satellite_2, 0, -1]]
-        y_coords = [self.positions_satellites[self.satellite_1, 1, -1], self.positions_satellites[self.satellite_2, 1, -1]]
-        z_coords = [self.positions_satellites[self.satellite_1, 2, -1], self.positions_satellites[self.satellite_2, 2, -1]]
+        x_coords = [self.positions_satellites[self.satellite_1, 0, -1],
+                    self.positions_satellites[self.satellite_2, 0, -1]]
+        y_coords = [self.positions_satellites[self.satellite_1, 1, -1],
+                    self.positions_satellites[self.satellite_2, 1, -1]]
+        z_coords = [self.positions_satellites[self.satellite_1, 2, -1],
+                    self.positions_satellites[self.satellite_2, 2, -1]]
 
-        if self.line is None:
+        if self.line is None:  # Créer la ligne la première fois
             self.line = Line3D(x_coords, y_coords, z_coords, color='g', linewidth=2)
             ax.add_line(self.line)
-        else:
+        else:  # Mettre à jour la ligne
             self.line.set_data_3d(x_coords, y_coords, z_coords)
 
         return self.line

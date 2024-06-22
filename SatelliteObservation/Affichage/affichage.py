@@ -1,6 +1,5 @@
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from .affichage_terre import *
+from .terre import *
 from .connexion_satellites import *
 
 rayon_terre = 6371
