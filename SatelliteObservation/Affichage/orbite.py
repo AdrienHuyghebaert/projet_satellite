@@ -10,6 +10,6 @@ class Orbite:
     def tracer_orbites(self, ax):
         for i in range(len(self.positions_satellites)):
             self.line = Line3D(self.positions_satellites[i, 0], self.positions_satellites[i, 1],
-                         self.positions_satellites[i, 2], color='b', label='Orbite')
+                               self.positions_satellites[i, 2], color='b', label='Orbite')
             ax.add_line(self.line)
         return self.line
