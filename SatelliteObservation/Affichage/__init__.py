@@ -1,7 +1,7 @@
 from .affichage_orbite import AffichageOrbiteSatellite
-from .affichage import AffichageOrbiteTraceConnection
+from .affichage import AffichageOrbiteTraceConnexion
 from .affichage_terre import *
 from .trace_antenne import TraceAntenne
 from .connexion_satellites import *
-from .affichage_2 import AffichageOrbiteTraceConnection2
+from .affichage_2 import AffichageOrbiteTraceConnexion2
 

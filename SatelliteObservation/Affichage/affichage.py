@@ -8,7 +8,7 @@ centre_terre = np.zeros(3)
 nb_points = 1000
 
 
-class AffichageOrbiteTraceConnection:
+class AffichageOrbiteTraceConnexion:
     def __init__(self, positions_satellites, a_satellites, b_satellites, aff_connexions, aff_terre):
         self.positions_satellites = positions_satellites
         self.a_satellites = a_satellites
