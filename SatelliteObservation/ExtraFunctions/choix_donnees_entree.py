@@ -6,6 +6,7 @@
 
 import SatelliteObservation
 import numpy as np
+import pandas as pd
 
 def choisir_format_entree(choix_donnees, nombre_satellite):
 
@@ -41,7 +42,6 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
                 tableau[i] = np.array(list(donnees_orb.values()))
 
-            print('Voici les données du satellite sélectionné: \n', tableau)
 
 
         # Entrée YAML: TLE
@@ -63,7 +63,6 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     donnees = fichier_yaml_TLE.donnees_TLE()
 
                 tableau[i] = donnees
-            print('\nVoici les données du/des satellite(s) sélectionné(s): \n', tableau)
 
 
     # Entrée: Base de données (fichier csv)
@@ -75,7 +74,17 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
             # Conversion de la ligne de donnée de la data frame en tableau numpy
             valeurs_ligne = base.appel_base_donnees()
             tableau[i] = valeurs_ligne.to_numpy()
-            print('Voici les données du satellite sélectionné: \n', tableau)
+
+    # Affichage console:
+
+    pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
+    pd.set_option('display.max_columns', None)  # None pour afficher toutes les colonnes
+
+    index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
+
+    df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
+
+    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df)
 
     return tableau
 

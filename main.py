@@ -9,8 +9,7 @@ import SatelliteObservation
 
 if __name__ == '__main__':
 
-
-    # Interface utilisateur
+    '''Interface utilisateur'''
 
     titre = "Bienvenue dans notre module sur l'étude des orbites des satellites"
     longueur = len(titre) + 4
@@ -19,9 +18,11 @@ if __name__ == '__main__':
     print("=" * longueur, '\n')
 
     liste_parametres = ['Nom_Satellite', 'Numero_NORAD', 'Masse', 'Classe_Orbite', 'Type_Orbite',
-                        'Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode']
+                        'Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite',
+                        'Inclinaison (deg)', 'Periode']
 
-    # Choix de l'action a effectuer:
+    '''Choix de l'action a effectuer'''
+
     print("\n\u21D2 Voici les actions possibles de ce programme:\n")
     choix = ["Communication entre deux satellites (0)", "Afficher une constellation de satellites (1)",
              "Affiche la trace d'un satellite sur la Terre (2)",
@@ -31,14 +32,17 @@ if __name__ == '__main__':
         print(f"- {item}")
     choix_action = SatelliteObservation.get_int_input("\n \u21D2 Tapez le numéro de l'action souhaitée: ")
 
-    # Choix des données d'entrées:
-    choix_donnees = SatelliteObservation.get_int_input('\u21D2 Souhaitez vous entrer les données de votre satellite (1) ou trouver un satellite dans la base de données (2) ? : \n')
+    '''Choix des données d'entrées'''
+
+    choix_donnees = SatelliteObservation.get_int_input('\u21D2 Souhaitez vous entrer les données de votre satellite '
+                                                       '(1) ou trouver un satellite dans la base de données (2) ? : \n')
 
     if choix_action == 0:
         donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, 2)
 
     elif choix_action == 1:
-        nbr_satellite = SatelliteObservation.get_int_input('Entrez le nombre de satellite que vous souhaitez afficher (max 5): ')
+        nbr_satellite = SatelliteObservation.get_int_input('Entrez le nombre de satellite que '
+                                                           'vous souhaitez afficher (max 5): ')
         donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, nbr_satellite)
 
 
@@ -76,7 +80,7 @@ if __name__ == '__main__':
         df = objet.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur)
         print('\nVoici la table modifiée: ', df[df['Numero_NORAD'] == numero_NORAD])
 
-    print(SatelliteObservation.choisir_format_entree(1, 2))
+
 
 
 
