@@ -1,5 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Line3D
+
+# Ajouter pour tracer en dehors du main
+# import matplotlib.pyplot as plt
 
 # Constantes
 rayon_terre = 6371  # km
@@ -7,19 +10,20 @@ angle_antenne = 160 # °
 resolution = 50  # nbr de points sur le cercle
 
 
-class TraceAntenne:
+class Antenne:
     def __init__(self, position_satellite):
         self.position_satellite = position_satellite
         self.angle_antenne =  angle_antenne
         self.resolution = resolution
         self.rayon_planete = rayon_terre
+        self.line = None
 
 
-    # Cette fonction a été créé à l'aide de ChatGPT :
-    #  prompt : tracer un cercle avec un angle dans l'espace 3D
+    # Cette fonction a été créé en partie avec l'utilisation de ChatGPT :
+    # prompt : tracer un cercle avec un angle dans l'espace 3D
     def creer_cercle(self):
 
-        # On convertit l'angle en radiant
+        # On convertit l'angle de l'antenne en radiant
         angle_antenne_rad = self.angle_antenne * np.pi / 360
 
         # création du vecteur normal au cercle de projection
@@ -51,7 +55,6 @@ class TraceAntenne:
 
     # Cette fonction à été réalisée à l'aide de ChatGPT
     # prompt : coordonnées d'un point d'intersection entre une droite et un cercle
-
     # Pour réaliser le calcul d'intersection entre la droite du cone et le cercle de la terre
     # on utilise la résolution d'une équation de second degrès (voir https://www.youtube.com/watch?v=zIsBk05vvjw)
     def intersection_ligne_cercle(self, vect_direction):
@@ -68,7 +71,10 @@ class TraceAntenne:
 
         if delta < 0:
             # Pas d'intersection réelle, on
-            return None
+            if self.position_satellite[0]<0 :
+                return [-rayon_terre, 0, 0]
+            else:
+                return [rayon_terre, 0, 0]
         elif delta == 0:
             # intersection tangente
             t = -b/(2*a)
@@ -115,32 +121,19 @@ class TraceAntenne:
 
         return direction_modif
 
+    def tracer_cercle_antenne(self, ax):
+        x_coords, y_coords, z_coords = self.creer_cercle()
 
-    def creer_planete(self):
-        # table des points des latitudes et longitudes de la planete
-        # table des angles pour faire le tour de la planete
-        theta = np.linspace(0, 2*np.pi, 201)
-        # valeurs de cos, sin et de zero
-        cth, sth, zth = [f(theta) for f in (np.cos, np.sin, np.zeros_like)]
-        lon0 = self.rayon_planete * np.vstack((cth, zth, sth))
-        longs = []
-        for phi in (np.pi/180) * np.arange(0, 180, 15):
-            cph, sph = [f(phi) for f in (np.cos, np.sin)]
-            lon = np.vstack((lon0[0] * cph - lon0[1] * sph,
-                             lon0[1] * cph + lon0[0] * sph,
-                             lon0[2]))
-            longs.append(lon)
+        if self.line is None:  # Créer la ligne la première fois
+            self.line = Line3D(x_coords, y_coords, z_coords, color='r', linewidth=2)
+            ax.add_line(self.line)
+        else:  # Mettre à jour la ligne
+            self.line.set_data_3d(x_coords, y_coords, z_coords)
 
-        # lat0 = rayon_planete * np.vstack((cth, sth, zth))
-        lats = []
-        for phi in (np.pi/180) * np.arange(-75, 90, 15):
-            cph, sph = [f(phi) for f in (np.cos, np.sin)]
-            lat = self.rayon_planete * np.vstack((cth * cph, sth * cph, zth + sph))
-            lats.append(lat)
+        return self.line
 
-        return longs, lats
-
-
+# Tracer en dehors du main
+'''
     def tracer_cercle(self):
         # On récupère les coordonnées du cercle à partir de la fonction creer_cercle()
         x_coord, y_coord, z_coord = self.creer_cercle()
@@ -170,3 +163,28 @@ class TraceAntenne:
 
         # Afficher le graphique
         plt.show()
+
+    def creer_planete(self):
+        # table des points des latitudes et longitudes de la planete
+        # table des angles pour faire le tour de la planete
+        theta = np.linspace(0, 2 * np.pi, 201)
+        # valeurs de cos, sin et de zero
+        cth, sth, zth = [f(theta) for f in (np.cos, np.sin, np.zeros_like)]
+        lon0 = self.rayon_planete * np.vstack((cth, zth, sth))
+        longs = []
+        for phi in (np.pi / 180) * np.arange(0, 180, 15):
+            cph, sph = [f(phi) for f in (np.cos, np.sin)]
+            lon = np.vstack((lon0[0] * cph - lon0[1] * sph,
+                             lon0[1] * cph + lon0[0] * sph,
+                             lon0[2]))
+            longs.append(lon)
+
+        # lat0 = rayon_planete * np.vstack((cth, sth, zth))
+        lats = []
+        for phi in (np.pi / 180) * np.arange(-75, 90, 15):
+            cph, sph = [f(phi) for f in (np.cos, np.sin)]
+            lat = self.rayon_planete * np.vstack((cth * cph, sth * cph, zth + sph))
+            lats.append(lat)
+
+        return longs, lats
+'''
