@@ -7,19 +7,13 @@ rayon_terre = 6371
 
 class ConnexionSatellites:
 
-    def __init__(self, binome, positions_satellites):
-        self.positions_satellites = positions_satellites
-        self.satellite_1 = 0
-        self.satellite_2 = 1
+    def __init__(self):
         self.line = None
 
-    def tracer_connexion_entre_satellites(self, ax, n):
-        x_coords = [self.positions_satellites[self.satellite_1, 0, n],
-                    self.positions_satellites[self.satellite_2, 0, n]]
-        y_coords = [self.positions_satellites[self.satellite_1, 1, n],
-                    self.positions_satellites[self.satellite_2, 1, n]]
-        z_coords = [self.positions_satellites[self.satellite_1, 2, n],
-                    self.positions_satellites[self.satellite_2, 2, n]]
+    def tracer_connexion_entre_satellites(self, ax, position_sat_1, position_sat_2):
+        x_coords = [position_sat_1[0], position_sat_2[0]]
+        y_coords = [position_sat_1[1], position_sat_2[1]]
+        z_coords = [position_sat_1[2], position_sat_2[2]]
 
         if self.line is None:  # Créer la ligne la première fois
             self.line = Line3D(x_coords, y_coords, z_coords, color='g', linewidth=2)
