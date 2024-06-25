@@ -37,8 +37,8 @@ class AffichageOrbiteTraceConnexion2:
         # Création des objets ConnexionSatellites
         if self.aff_connexions:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):
-                for j in range(i + 1,
-                               len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
+                # Éviter les connexions doubles et les auto-connexions
+                for j in range(i + 1, len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
                     self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
                     connexion = ConnexionSatellites((i, j), self.positions_satellites)  # Création de l'objet connexion
                     self.lignes_connexion[(i, j)] = connexion  # Ajout de l'objet connexion dans le dictionnaire
@@ -98,7 +98,6 @@ class AffichageOrbiteTraceConnexion2:
             for connexion in self.binomes_satellites:
                 line = self.lignes_connexion[connexion].mettre_a_jour_connexions(n)
                 artists.append(line)
-
         return artists
 
     def animate(self):
