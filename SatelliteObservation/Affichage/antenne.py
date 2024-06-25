@@ -21,14 +21,14 @@ class Antenne:
 
     # Cette fonction a été créé en partie avec l'utilisation de ChatGPT :
     # prompt : tracer un cercle avec un angle dans l'espace 3D
-    def creer_cercle(self):
+    def creer_cercle(self, position_satellite):
 
         # On convertit l'angle de l'antenne en radiant
         angle_antenne_rad = self.angle_antenne * np.pi / 360
 
         # création du vecteur normal au cercle de projection
         centre_planete = np.zeros(3)
-        vect_direction = np.array(self.position_satellite) - centre_planete
+        vect_direction = np.array(position_satellite) - centre_planete
         vect_cone = self.tourner_ligne_theta(vect_direction, angle_antenne_rad)
 
         # creation des points correspondants au cercle projeté sur la Terre par le cone de l'antenne du satellite
@@ -121,8 +121,8 @@ class Antenne:
 
         return direction_modif
 
-    def tracer_cercle_antenne(self, ax):
-        x_coords, y_coords, z_coords = self.creer_cercle()
+    def tracer_cercle_antenne(self, ax, position_satellite):
+        x_coords, y_coords, z_coords = self.creer_cercle(position_satellite)
 
         if self.line is None:  # Créer la ligne la première fois
             self.line = Line3D(x_coords, y_coords, z_coords, color='r', linewidth=2)
