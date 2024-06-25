@@ -8,6 +8,7 @@ import numpy as np
 
 masse_terre = 5.974 * (10 ** 24)  # Masse de la Terre en kg
 G = 6.67 * 10 ** (-11)  # Constante gravitationnelle universelle
+rayon_terre = 6374.2  # Rayon de la Terre en km
 
 
 class Lire_YAML:
@@ -68,8 +69,10 @@ class Lire_YAML:
         a = (mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3)  # calcul du demi grand axe en km
         r_p = a * (1 - excentricite)  # rayon périgée en km
         r_a = a * (1 + excentricite)  # rayon apogée en km
+        apogee = r_a - rayon_terre
+        perigee = r_p - rayon_terre
 
         # Création de tableaux de variables d'entrées:
-        donnees_satellite_orbite_TLE = np.array([numero_sat, classe_sat, a, excentricite, r_p, r_a, inclinaison])
+        donnees_satellite_orbite_TLE = np.array([apogee, perigee, inclinaison, numero_sat, classe_sat, a, excentricite])
 
         return donnees_satellite_orbite_TLE

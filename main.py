@@ -5,11 +5,12 @@
 # ======================================================================================================================
 
 import SatelliteObservation
+import numpy as np
 
 
 if __name__ == '__main__':
 
-    '''Interface utilisateur'''
+    # Interface utilisateur
 
     titre = "Bienvenue dans notre module sur l'étude des orbites des satellites"
     longueur = len(titre) + 4
@@ -39,6 +40,30 @@ if __name__ == '__main__':
 
     if choix_action == 0:
         donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, 2)
+        print(type(donnees_entree[0][1]))
+
+
+        donnees_satellites = np.zeros((len(donnees_entree)))
+        position_satellites = np.zeros((len(donnees_entree), 3, 1000), dtype=object)
+
+        a_satellites = np.zeros((len(donnees_entree)), dtype=object)
+        b_satellites = np.zeros((len(donnees_entree)), dtype=object)
+        afficher_connexion = SatelliteObservation.get_str_input('Souhaitez-vous afficher les connexions (Répondre: True or False)?')
+        afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)?')
+        afficher_orbite = SatelliteObservation.get_str_input(" Souhaitez-vous afficher les connexions l'orbite (Répondre: True or False)?")
+        for i in range(len(donnees_entree)):
+            satellite = SatelliteObservation.Satellite(donnees_entree[i][0], donnees_entree[i][1], donnees_entree[i][2])
+            position_satellites[i] = satellite.calcul_coord_ellipse_inclinee()[3]
+            a_satellites[i] = satellite.calcul_parametres_ellipse()[0]
+            b_satellites[i] = satellite.calcul_parametres_ellipse()[1]
+        SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites, b_satellites, afficher_connexion, afficher_terre, afficher_orbite)
+
+        affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites,
+                                                                        b_satellites,
+                                                                        afficher_connexion, afficher_terre,
+                                                                        afficher_orbite)
+        affichage.animate()
+
 
     elif choix_action == 1:
         nbr_satellite = SatelliteObservation.get_int_input('Entrez le nombre de satellite que '
@@ -110,25 +135,21 @@ if __name__ == '__main__':
 
 
 
+'''''
 
-
-
-
-'''''Brouillon 
+#Brouillon 
     
-=======
-    '''''
 
-    float = SatelliteObservation.get_float_input('Entrez un float : \n')
-    print(float)
-    entier = SatelliteObservation.get_int_input('Entrez un entier : \n')
-    print(entier)
-    str = SatelliteObservation.get_str_input('Entrez un str : \n')
-    print(str)
+float = SatelliteObservation.get_float_input('Entrez un float : \n')
+print(float)
+entier = SatelliteObservation.get_int_input('Entrez un entier : \n')
+print(entier)
+str = SatelliteObservation.get_str_input('Entrez un str : \n')
+print(str)
+''''''
+satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
 
-    satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-
-    satellite.tracer_orbite_3d()
+satellite.tracer_orbite_3d()
 
     
 
@@ -158,11 +179,11 @@ print(df[df['Numero_NORAD'] == 55107])
 
 
 
-satellite_1 = SatelliteObservation.Satellite(10, 10500, 0.9, 5, 50)
-satellite_2 = SatelliteObservation.Satellite(30006, 6, 0.8, 36.9, 40)
-satellite_3 = SatelliteObservation.Satellite(956, 897, 0.7, 90, 4000)
-satellite_4 = SatelliteObservation.Satellite(720, 12, 0.7, 12, 12)
-'''
+satellite_1 = SatelliteObservation.Satellite(10, 10500, 5, 50)
+satellite_2 = SatelliteObservation.Satellite(30006, 6, 36.9, 40)
+satellite_3 = SatelliteObservation.Satellite(956, 897,  90, 4000)
+satellite_4 = SatelliteObservation.Satellite(720, 12,  12, 12)
+
 afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
                                                                 SatelliteObservation.Satellite.calcul_parametres_ellipse
                                                                 (satellite_1)[0],
@@ -180,7 +201,7 @@ afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
 
 afficher_orbite.get_data()
 afficher_orbite.animate()
-'''
+
 # Affichage de plusieurs orbites
 a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
 a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
@@ -204,16 +225,13 @@ positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat
 afficher_connexions = True
 afficher_terre = True
 afficher_orbite = True
-affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(positions_satellites, a_satellites, b_satellites,
-                                                                afficher_connexions, afficher_terre, afficher_orbite)
-affichage.animate()
 
-'''
-# Test de la class TraceAntenne
-'''
+
+
 # test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
 # x_pos, y_pos, z_pos = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)
 # position_sat = [x_pos[567], y_pos[567], z_pos[567]]
 # data = SatelliteObservation.TraceAntenne(position_sat)
 # data.tracer_cercle()
 
+'''''

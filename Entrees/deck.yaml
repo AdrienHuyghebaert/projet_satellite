@@ -10,13 +10,13 @@ Satellite:
   Numero_NORAD : 52631
   Masse : 22 # en kg
 Orbite:
+  Apogee (km): 600 # en km
+  Perigee (km): 576 # en km
+  Inclinaison (deg) : 45 # en deg
   Classe_Orbite: LEO # (LEO, GEO...)
   Type_Orbite: Sun-Synchronous
   Longitude (deg): 56
-  Perigee (km): 576 # en km
-  Apogee (km): 600 # en km
   Excentricite: 0.00052 # en km
-  Inclinaison (deg) : 45 # en deg
   Periode : 15
 
 # ======================================= 2) Données TLE ==========================================================

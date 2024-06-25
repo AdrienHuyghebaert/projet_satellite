@@ -67,13 +67,32 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     # Entrée: Base de données (fichier csv)
     elif choix_donnees == 2:
+
+        tableau = np.zeros((nombre_satellite, 11), dtype=object)
+
         for i in range(nombre_satellite):
             numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier (5 chiffres):')
             base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)
 
             # Conversion de la ligne de donnée de la data frame en tableau numpy
             valeurs_ligne = base.appel_base_donnees()
-            tableau[i] = valeurs_ligne.to_numpy()
+            ligne = valeurs_ligne.values.tolist()[0]
+
+            numerical_cols = [0, 1, 2, 3, 4, 5, 7, 10]  # Indices des colonnes numériques dans le tableau
+
+            for col_idx in range(11):
+                if col_idx in numerical_cols:
+                    tableau[i][col_idx] = float(ligne[col_idx])
+
+                else:
+                    tableau[i][col_idx]= ligne[col_idx]
+
+
+        #tableau = float(tableau_string[:][col_idx])
+
+            #tableau[:][col_idx] = tableau[:][col_idx].astype(float)
+
+        print(tableau)
 
     # Affichage console:
 
@@ -82,9 +101,11 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
-    df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
+    #df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
 
-    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df)
+    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', tableau)
 
     return tableau
+
+
 
