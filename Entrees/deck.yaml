@@ -1,20 +1,25 @@
-# Donnée utilisateurs
+# Fichier YAML: Donnée utilisateurs
 
 # Instructions: Veuillez compléter le fichier avec vos valeurs d'entrees
 
-# Données satellite
+
+# ======================================= 1) Données satellite ====================================================
 
 Satellite:
-  numero_NORAD : 52631
-  classe_orbite : LEO # (LEO, GEO...)
-  masse : 22 # en kg
+  Nom_Satellite: AISTechSat-2
+  Numero_NORAD : 52631
+  Masse : 22 # en kg
 Orbite:
-  perigee: 576 # en km
-  apogee: 600 # en km
-  e: 0.00052 # en km
-  inclinaison : 45 # en deg
+  Classe_Orbite: LEO # (LEO, GEO...)
+  Type_Orbite: Sun-Synchronous
+  Longitude (deg): 56
+  Perigee (km): 576 # en km
+  Apogee (km): 600 # en km
+  Excentricite: 0.00052 # en km
+  Inclinaison (deg) : 45 # en deg
+  Periode : 15
 
-
+# ======================================= 2) Données TLE ==========================================================
 
 # Ex TLE : ISS (ZARYA)
 
@@ -24,3 +29,5 @@ Orbite:
 TLE_ligne1: 1 25544U 98067A   20300.83097691  .00001534  00000-0  35580-4 0  9996
 
 TLE_ligne2: 2 25544  51.6453  57.0843 0001671  64.9808  73.0513 15.49338189252428
+
+
