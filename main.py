@@ -161,6 +161,7 @@ print(df[df['Numero_NORAD'] == 55107])
 satellite_1 = SatelliteObservation.Satellite(10, 10500, 0.9, 5, 50)
 satellite_2 = SatelliteObservation.Satellite(30006, 6, 0.8, 36.9, 40)
 satellite_3 = SatelliteObservation.Satellite(956, 897, 0.7, 90, 4000)
+satellite_4 = SatelliteObservation.Satellite(720, 12, 0.7, 12, 12)
 '''
 afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
                                                                 SatelliteObservation.Satellite.calcul_parametres_ellipse
@@ -184,23 +185,27 @@ afficher_orbite.animate()
 a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
 a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
 a_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[0]
-a_satellites = np.array([a_sat_1, a_sat_2, a_sat_3])
+a_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[0]
+a_satellites = np.array([a_sat_1, a_sat_2, a_sat_3, a_sat_4])
 
 b_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[1]
 b_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[1]
 b_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[1]
-b_satellites = np.array([b_sat_1, b_sat_2, b_sat_3])
+b_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[1]
+b_satellites = np.array([b_sat_1, b_sat_2, b_sat_3, b_sat_4])
 
 positions_sat_1 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_1)[3]
 positions_sat_2 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_2)[3]
 positions_sat_3 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_3)[3]
-positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3])
+positions_sat_4 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_4)[3]
+positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3, positions_sat_4])
 
 # Paramètre qui permet d'afficher ou non les connexions entre les satellites
 afficher_connexions = True
 afficher_terre = True
-affichage = SatelliteObservation.AffichageOrbiteTraceConnection(positions_satellites, len(positions_satellites),
-                                                                a_satellites, b_satellites, afficher_connexions, afficher_terre)
+afficher_orbite = True
+affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(positions_satellites, a_satellites, b_satellites,
+                                                                afficher_connexions, afficher_terre, afficher_orbite)
 affichage.animate()
 
 '''
