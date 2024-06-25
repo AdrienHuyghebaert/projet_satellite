@@ -41,9 +41,9 @@ class AffichageOrbiteTraceConnexion2:
         if self.aff_connexions:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):
                 # Éviter les connexions doubles et les auto-connexions
-                for j in range(i + 1, len(self.positions_satellites)):  # Éviter les connexions doubles et les auto-connexions
+                for j in range(i + 1, len(self.positions_satellites)):
                     self.binomes_satellites.append((i, j))  # Ajouter chaque couple unique de satellites
-                    connexion = ConnexionSatellites((i, j), self.positions_satellites)  # Création de l'objet connexion
+                    connexion = ConnexionSatellites()  # Création de l'objet connexion
                     self.lignes_connexion[(i, j)] = connexion  # Ajout de l'objet connexion dans le dictionnaire
 
         # Création des objets Antenne
@@ -73,7 +73,17 @@ class AffichageOrbiteTraceConnexion2:
         # Initialisation animation des connexions entre les satellites
         if self.aff_connexions:
             for connexion in self.binomes_satellites:
-                line = self.lignes_connexion[connexion].tracer_connexion_entre_satellites(self.ax)
+                sat_1, sat_2 = connexion
+                x_1 = self.positions_satellites[sat_1, 0, 0]
+                y_1 = self.positions_satellites[sat_1, 1, 0]
+                z_1 = self.positions_satellites[sat_1, 2, 0]
+                x_2 = self.positions_satellites[sat_2, 0, 0]
+                y_2 = self.positions_satellites[sat_2, 1, 0]
+                z_2 = self.positions_satellites[sat_2, 2, 0]
+                position_sat_1 = np.array([x_1, y_1, z_1])
+                position_sat_2 = np.array([x_2, y_2, z_2])
+                line = (self.lignes_connexion[connexion].tracer_connexion_entre_satellites
+                        (self.ax, position_sat_1, position_sat_2))
                 artists.append(line)
 
         # Initialisation animation des antennes
@@ -97,6 +107,7 @@ class AffichageOrbiteTraceConnexion2:
             orbites = Orbite(self.positions_satellites)
             lines = orbites.tracer_orbites(self.ax)
             artists.append(lines)
+            print(lines)
         return artists
 
     def update_animation(self, n):
@@ -121,7 +132,18 @@ class AffichageOrbiteTraceConnexion2:
         # Mettre à jour toutes les lignes de connexion entre les satellites
         if self.aff_connexions:
             for connexion in self.binomes_satellites:
-                line = self.lignes_connexion[connexion].mettre_a_jour_connexions(n)
+                sat_1, sat_2 = connexion
+                x_1 = self.positions_satellites[sat_1, 0, n]
+                y_1 = self.positions_satellites[sat_1, 1, n]
+                z_1 = self.positions_satellites[sat_1, 2, n]
+                x_2 = self.positions_satellites[sat_2, 0, n]
+                y_2 = self.positions_satellites[sat_2, 1, n]
+                z_2 = self.positions_satellites[sat_2, 2, n]
+                position_sat_1 = np.array([x_1, y_1, z_1])
+                position_sat_2 = np.array([x_2, y_2, z_2])
+
+                line = (self.lignes_connexion[connexion].tracer_connexion_entre_satellites
+                        (self.ax, position_sat_1, position_sat_2))
                 artists.append(line)
 
         return artists

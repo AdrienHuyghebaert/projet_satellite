@@ -12,5 +12,4 @@ class Orbite:
             self.line = Line3D(self.positions_satellites[i, 0], self.positions_satellites[i, 1],
                                self.positions_satellites[i, 2], color='b', label='Orbite')
             ax.add_line(self.line)
-            print(self.line)
         return self.line
