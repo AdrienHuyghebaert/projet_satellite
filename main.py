@@ -21,7 +21,7 @@ if __name__ == '__main__':
                         'Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite',
                         'Inclinaison (deg)', 'Periode']
 
-    '''Choix de l'action a effectuer'''
+    # Choix de l'action a effectuer
 
     print("\n\u21D2 Voici les actions possibles de ce programme:\n")
     choix = ["Communication entre deux satellites (0)", "Afficher une constellation de satellites (1)",
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         print(f"- {item}")
     choix_action = SatelliteObservation.get_int_input("\n \u21D2 Tapez le numéro de l'action souhaitée: ")
 
-    '''Choix des données d'entrées'''
+    # Choix des données d'entrées
 
     choix_donnees = SatelliteObservation.get_int_input('\u21D2 Souhaitez vous entrer les données de votre satellite '
                                                        '(1) ou trouver un satellite dans la base de données (2) ? : \n')
