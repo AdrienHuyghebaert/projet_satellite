@@ -30,9 +30,14 @@ class ConnexionSatellites:
         return self.line
 
     def tester_connexion_satellites(self, position_sat_1, position_sat_2):
+        # Données de la Terre et des satellites
         point_centre = centre_terre
         point_droite = np.array(position_sat_1)
+
+        # Segment entre les deux sat
         vect = np.array(position_sat_2 - position_sat_1)
+
+        # Test si les satellites sont proches
         projection = point_droite + np.dot(point_centre - point_droite, vect) / np.dot(vect, vect) * vect
         distance = np.linalg.norm(projection - point_centre)
         return distance
@@ -49,7 +54,15 @@ class ConnexionSatellites:
         position_sat_2 = np.array([x_coords[1], y_coords[1], z_coords[1]])
         distance = self.tester_connexion_satellites(position_sat_1, position_sat_2)
 
-        if distance > rayon_terre:
+        altitude_sat_1 = np.linalg.norm(position_sat_1) - rayon_terre
+        altitude_sat_2 = np.linalg.norm(position_sat_2) - rayon_terre
+        # Segment entre les deux sat
+        vect = np.array(position_sat_2 - position_sat_1)
+        distance_sat = np.linalg.norm(vect)
+
+        if distance_sat <= altitude_sat_1 or distance_sat <= altitude_sat_2 :
+            self.line.set_data_3d(x_coords, y_coords, z_coords)
+        elif distance > rayon_terre:
             self.line.set_data_3d(x_coords, y_coords, z_coords)
         else:
             self.line.set_data_3d([0, 0], [0, 0], [0, 0])
