@@ -92,7 +92,6 @@ class AffichageOrbiteTraceConnexion2:
             lines = orbites.tracer_orbites(self.ax)
             artists.append(lines)
 
-
         return artists
 
     def update_animation(self, n):

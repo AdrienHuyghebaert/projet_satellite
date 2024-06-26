@@ -20,4 +20,3 @@ class Orbite:
                                self.positions_satellites[i, 2], color='b')
             ax.add_line(self.line)
         return self.line
-
