@@ -93,7 +93,6 @@ positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat
 afficher_connexions = True
 afficher_terre = True
 afficher_orbite = True
-print(positions_satellites)
 affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(positions_satellites, a_satellites, b_satellites,
                                                                 afficher_connexions, afficher_terre, afficher_orbite)
 affichage.animate()
