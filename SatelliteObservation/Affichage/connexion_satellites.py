@@ -1,3 +1,9 @@
+# ==========================================================================================
+# Classe: Connexion_Satellites
+# Cette classe permet de créer des objets connexion_satellites qui permettent de représenter
+# la capacité de 2 satellites a communiquer entre eux et d'en créer une ligne 3D
+# ==========================================================================================
+
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3D
 

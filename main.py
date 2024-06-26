@@ -89,12 +89,15 @@ positions_sat_3 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(s
 positions_sat_4 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_4)[3]
 positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3, positions_sat_4])
 
+noms_sats = ['Clelia', 'Baptiste', 'Adrien', 'MGA802']
+
 # Paramètre qui permet d'afficher ou non les connexions entre les satellites
 afficher_connexions = True
-afficher_terre = True
+afficher_terre = False
 afficher_orbite = True
+actions = [afficher_connexions, afficher_terre, afficher_orbite]
 affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(positions_satellites, a_satellites, b_satellites,
-                                                                afficher_connexions, afficher_terre, afficher_orbite)
+                                                                actions, noms_sats)
 affichage.animate()
 
 '''

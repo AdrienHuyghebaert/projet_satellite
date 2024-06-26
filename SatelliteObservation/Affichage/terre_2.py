@@ -1,3 +1,9 @@
+# ==========================================================================================
+# Classe: Terre
+# Cette classe permet de créer une représentation de la Terre
+# et de créer les lignes correspondantes
+# ==========================================================================================
+
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3D
 
