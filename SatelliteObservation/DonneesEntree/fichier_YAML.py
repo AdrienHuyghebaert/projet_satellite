@@ -18,6 +18,7 @@ class Lire_YAML:
         self.nom_fichier = nom_fichier
 
 # Lit le fichier deck.yaml: ============================================================================================
+
     def lecture_fichier(self):
         # Récupération des données du YAML
         from SatelliteObservation.DonneesEntree.LecteurYAML import LecteurYAML

@@ -15,8 +15,8 @@ import SatelliteObservation
 # 33460
 class BaseDonnees:
 
-    def __init__(self, nom_base_donnee, NORAD_number):
-        self.nom_base_donnee = nom_base_donnee
+    def __init__(self, nom_base_donnees, NORAD_number):
+        self.nom_base_donnees = nom_base_donnees
         self.NORAD_number = NORAD_number
 
     # Table utilisée: 'UCS-Satellite-Database 5-1-2023.csv'
@@ -25,7 +25,7 @@ class BaseDonnees:
 
     def lire_base_donnees(self):
 
-        tableau = pd.read_csv(self.nom_base_donnee, delimiter=';', decimal=',', thousands=' ',
+        tableau = pd.read_csv(self.nom_base_donnees, delimiter=';', decimal=',', thousands=' ',
                               usecols=(1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26))
 
 

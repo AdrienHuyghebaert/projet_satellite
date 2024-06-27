@@ -7,15 +7,15 @@
 
 Satellite:
   Nom_Satellite: AISTechSat-2
-  Numero_NORAD : 52631
+  Numero_NORAD : 50000
   Masse : 22 # en kg
 Orbite:
-  Apogee (km): 600 # en km
-  Perigee (km): 576 # en km
-  Inclinaison (deg) : 45 # en deg
+  Apogee (km): 605 # en km
+  Perigee (km): 500 # en km
+  Inclinaison (deg) : 65 # en deg
   Classe_Orbite: LEO # (LEO, GEO...)
   Type_Orbite: Sun-Synchronous
-  Longitude (deg): 56
+  Longitude (deg): 55
   Excentricite: 0.00052 # en km
   Periode : 15
 

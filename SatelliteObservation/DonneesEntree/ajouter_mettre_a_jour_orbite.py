@@ -9,6 +9,8 @@ import pandas as pd
 import numpy as np
 import os
 
+import SatelliteObservation
+
 
 class AjoutOrbite:
     def __init__(self, nom_base_donnees):
@@ -18,14 +20,21 @@ class AjoutOrbite:
 # Retourner la table panda avec les colonnes sélectionnées:=============================================================
     def lire_base_donnees(self):
 
-        # Lecture du fichier .csv
         tableau = pd.read_csv(self.nom_base_donnees, delimiter=';', decimal=',', thousands=' ',
-                              usecols=(1, 8, 9, 10, 12, 13, 14, 15, 16, 17, 26))
+                              usecols=(1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26))
+
 
         # On renomme les colonnes de la table
         tableau.columns = ['Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)',
-                           'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode',
-                           'Masse', 'Numero_NORAD']
+                           'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode', 'Masse',
+                           'Numero_NORAD']
+
+        # Réordonner les colonnes
+        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+                          'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
+
+        tableau = tableau[ordre_colonnes]
+
         return tableau
 
 # Traite la base de données et la renvoie: =============================================================================
@@ -52,28 +61,55 @@ class AjoutOrbite:
 
 # Ajouter une nouvelle ligne dans la data frame: =======================================================================
 
-    def ajouter_orbite(self, donnees):
-        data_frame = self.traitement_base_donnees()
+    def ajouter_orbite(self, donnees, deja_modifie):
+
+        if deja_modifie == True:
+
+            data_frame = pd.read_csv(self.nom_base_donnees, delimiter=',', decimal=',', thousands=' ')
+
+        elif deja_modifie == False:
+
+            data_frame = self.traitement_base_donnees()
+
         new_data_frame = pd.concat([data_frame, pd.DataFrame(donnees.values(), columns=data_frame.columns)],
                                    ignore_index=True)
-        return new_data_frame
 
-# Modifie une donnée d'une orbite existante dans la data frame : =======================================================================
-    def modifier_orbite(self, nom_colonne, numero_NORAD, valeur_modifiee):
-        df= self.traitement_base_donnees()
-        df.loc[df['Numero_NORAD'] == numero_NORAD, nom_colonne] = valeur_modifiee
-        return df
-
-
-
-# Enregistre la nouvelle base de donnée sous un fichier csv: ===========================================================
-    def enregistrer_nouvelle_base_donnees(self):
         # Enregistrer le DataFrame dans un fichier CSV
-        nom_fichier_csv = 'Base_donnees_satellites_ajout.csv'
+        nom_fichier_csv = 'Base_donnees_satellites_utilisateur.csv'
 
         # Le nouveau fichier csv est ajouter au dossier des données d'entrée
         dossier_destination = os.path.join('Entrees')
-        df = self.ajouter_orbite()
+
         nom_fichier_csv = os.path.join(dossier_destination, nom_fichier_csv)
+
+        new_data_frame.to_csv(nom_fichier_csv, index=False)
+        return new_data_frame
+
+
+# Modifie une donnée d'une orbite existante dans la data frame : =======================================================================
+    def modifier_orbite(self, nom_colonne, numero_NORAD, valeur_modifiee, deja_modifie):
+
+        if deja_modifie == True:
+
+            df = pd.read_csv(self.nom_base_donnees, delimiter=',', decimal=',', thousands=' ')
+
+        elif deja_modifie == False:
+
+            df = self.traitement_base_donnees()
+
+        df.loc[df['Numero_NORAD'] == numero_NORAD, nom_colonne] = valeur_modifiee
+
+        nom_fichier_csv = 'Base_donnees_satellites_utilisateur.csv'
+
+        # Le nouveau fichier csv est ajouter au dossier des données d'entrée
+        dossier_destination = os.path.join('Entrees')
+
+        nom_fichier_csv = os.path.join(dossier_destination, nom_fichier_csv)
+
         df.to_csv(nom_fichier_csv, index=False)
 
+        return df
+
+# table = AjoutOrbite('Base_donnees_satellites_utilisateur.csv')
+#
+# print(table.modifier_orbite('Masse', 44859, 50, True))
