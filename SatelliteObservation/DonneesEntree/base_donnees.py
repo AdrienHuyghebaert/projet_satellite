@@ -35,8 +35,8 @@ class BaseDonnees:
                            'Numero_NORAD']
 
         # Réordonner les colonnes
-        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Masse', 'Periode', 'Excentricite',
-                          'Nom_Satellite', 'Numero_NORAD', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
+        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+                          'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
 
         tableau = tableau[ordre_colonnes]
 

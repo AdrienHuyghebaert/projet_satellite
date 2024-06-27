@@ -1,5 +1,5 @@
 # ======================================================================================================================
-# Auteurs: Groupe
+# Auteurs: Groupe 5
 # Date: 20/06/2024
 # Programme: Ce programme permet de sélectionner les données d'entrée selon le choix de l'utilisateur
 # ======================================================================================================================
@@ -10,7 +10,6 @@ import pandas as pd
 
 def choisir_format_entree(choix_donnees, nombre_satellite):
 
-    tableau = np.empty((nombre_satellite,), dtype=object)
 
 # Entrée: fichier YAML
     if choix_donnees == 1:
@@ -20,6 +19,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
         # Entrée YAML: données satellite
         if choix_yaml == 0:
+            tableau = np.zeros((nombre_satellite, 11), dtype=object)
             for i in range(nombre_satellite):
 
                 # Vérifier si l'utilisateur a déjà modifié le fichier deck.yaml pour le satellite
@@ -30,6 +30,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml') # instanciation objet
                     donnees_sat = fichier_yaml.donnees_satellite()[1]
                     donnees_orb = fichier_yaml.donnees_satellite()[0]
+                    concat_dict = {**donnees_orb, **donnees_sat}
 
                 else:
                     input("Appuyez sur Entrée lorsque vous avez terminé de modifier le fichier...")
@@ -39,14 +40,28 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # instanciation objet
                     donnees_sat = fichier_yaml.donnees_satellite()[1]
                     donnees_orb = fichier_yaml.donnees_satellite()[0]
+                    concat_dict = {**donnees_orb, **donnees_sat}
 
-                tableau[i] = np.array(list(donnees_orb.values()))
+                liste = list(concat_dict.values())
+                numero_norad = liste.pop(9)
+                liste.insert(3, numero_norad)
+
+                numerical_cols = [0, 1, 2, 3, 6, 7, 8, 10]  # Indices des colonnes numériques dans le tableau
+
+                for col_idx in range(11):
+                    if col_idx in numerical_cols:
+                        tableau[i][col_idx] = float(liste[col_idx])
+
+                    else:
+                        tableau[i][col_idx]= liste[col_idx]
 
 
 
         # Entrée YAML: TLE
         elif choix_donnees == 1:
-            compteur = nombre_satellite
+
+            tableau = np.zeros((nombre_satellite, 7), dtype=object)
+
             for i in range(nombre_satellite):
 
                 # Vérifier si l'utilisateur a déjà modifié le fichier deck.yaml pour le satellite
@@ -64,6 +79,15 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
                 tableau[i] = donnees
 
+                numerical_cols = [0, 1, 2, 3, 5, 6]  # Indices des colonnes numériques dans le tableau
+
+                for col_idx in range(7):
+                    if col_idx in numerical_cols:
+                        tableau[i][col_idx] = float(tableau[i][col_idx])
+
+                    else:
+                        tableau[i][col_idx] = tableau[i][col_idx]
+
 
     # Entrée: Base de données (fichier csv)
     elif choix_donnees == 2:
@@ -78,7 +102,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
             valeurs_ligne = base.appel_base_donnees()
             ligne = valeurs_ligne.values.tolist()[0]
 
-            numerical_cols = [0, 1, 2, 3, 4, 5, 7, 10]  # Indices des colonnes numériques dans le tableau
+            numerical_cols = [0, 1, 2, 3, 4, 5, 6, 10]  # Indices des colonnes numériques dans le tableau
 
             for col_idx in range(11):
                 if col_idx in numerical_cols:
@@ -87,13 +111,6 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                 else:
                     tableau[i][col_idx]= ligne[col_idx]
 
-
-        #tableau = float(tableau_string[:][col_idx])
-
-            #tableau[:][col_idx] = tableau[:][col_idx].astype(float)
-
-        print(tableau)
-
     # Affichage console:
 
     pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
@@ -101,7 +118,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
-    #df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
+    # df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
 
     print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', tableau)
 

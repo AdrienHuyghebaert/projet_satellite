@@ -1,5 +1,5 @@
 # ======================================================================================================================
-# Auteurs: Groupe
+# Auteurs: Groupe 5
 # Date: 20/06/2024
 # Programme: Ce programme permet d'utiliser le module projet_satellite avec toutes ses fonctionnalitées
 # ======================================================================================================================
@@ -25,10 +25,9 @@ if __name__ == '__main__':
     # Choix de l'action a effectuer
 
     print("\n\u21D2 Voici les actions possibles de ce programme:\n")
-    choix = ["Communication entre deux satellites (0)", "Afficher une constellation de satellites (1)",
-             "Affiche la trace d'un satellite sur la Terre (2)",
-             "Ajouter les données d'un satellite dans la base de données (3)",
-             "Modifier des données d'orbite d'un satellite de la base de données (4)"]
+    choix = ["Affichage des orbites (1): Communication entre deux satellites ou Afficher une constellation de satellites ou Affiche la trace d'un satellite sur la Terre",
+             "Ajouter les données d'un satellite dans la base de données (2)",
+             "Modifier des données d'orbite d'un satellite de la base de données (3)"]
     for item in choix:
         print(f"- {item}")
     choix_action = SatelliteObservation.get_int_input("\n \u21D2 Tapez le numéro de l'action souhaitée: ")
@@ -38,10 +37,11 @@ if __name__ == '__main__':
     choix_donnees = SatelliteObservation.get_int_input('\u21D2 Souhaitez vous entrer les données de votre satellite '
                                                        '(1) ou trouver un satellite dans la base de données (2) ? : \n')
 
-    if choix_action == 0:
-        donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, 2)
+    if choix_action == 1:
+        nbr_satellite = SatelliteObservation.get_int_input('Entrez le nombre de satellite que '
+                                                           'vous souhaitez afficher (max 5): ')
+        donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, nbr_satellite)
         print(type(donnees_entree[0][1]))
-
 
         donnees_satellites = np.zeros((len(donnees_entree)))
         position_satellites = np.zeros((len(donnees_entree), 3, 1000), dtype=object)
@@ -50,7 +50,8 @@ if __name__ == '__main__':
         b_satellites = np.zeros((len(donnees_entree)), dtype=object)
         afficher_connexion = SatelliteObservation.get_str_input('Souhaitez-vous afficher les connexions (Répondre: True or False)?')
         afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)?')
-        afficher_orbite = SatelliteObservation.get_str_input(" Souhaitez-vous afficher les connexions l'orbite (Répondre: True or False)?")
+        afficher_orbite = SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)?")
+
         for i in range(len(donnees_entree)):
             satellite = SatelliteObservation.Satellite(donnees_entree[i][0], donnees_entree[i][1], donnees_entree[i][2])
             position_satellites[i] = satellite.calcul_coord_ellipse_inclinee()[3]
@@ -65,32 +66,20 @@ if __name__ == '__main__':
         affichage.animate()
 
 
-    elif choix_action == 1:
-        nbr_satellite = SatelliteObservation.get_int_input('Entrez le nombre de satellite que '
-                                                           'vous souhaitez afficher (max 5): ')
-        donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, nbr_satellite)
-
+    # Ajout des données d'un satellite dans la base de données (2)
 
     elif choix_action == 2:
         donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, 1)
-
-
-    # Ajout des données d'un satellite dans la base de données (3)
-
-
-    elif choix_action == 3:
-        objet = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
-        dictionnaire = objet.lecture_fichier()
+        dictionnaire = donnees_entree.lecture_fichier()
         nouveau_dictionnaire = {
             'SatelliteOrbite': {**dictionnaire.get('Satellite', {}), **dictionnaire.get('Orbite', {})}}
-        print(nouveau_dictionnaire)
         nouvelle_data_frame = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
         df = nouvelle_data_frame.ajouter_orbite(nouveau_dictionnaire)
         print(df)
 
-    # Modification des données d'un satellite présent dans la base de données (4)
+    # Modification des données d'un satellite présent dans la base de données (3)
 
-    elif choix_action == 4:
+    elif choix_action == 3:
         # Instanciation
         objet = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
         numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à modifier (5 chiffres): ')
@@ -129,109 +118,3 @@ if __name__ == '__main__':
         nouvelle_valeur = SatelliteObservation.get_int_input('\nQuelle est la nouvelle valeur: ')
         df = objet.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur)
         print('\nVoici la table modifiée: ', df[df['Numero_NORAD'] == numero_NORAD])
-
-
-
-
-
-
-'''''
-
-#Brouillon 
-    
-
-float = SatelliteObservation.get_float_input('Entrez un float : \n')
-print(float)
-entier = SatelliteObservation.get_int_input('Entrez un entier : \n')
-print(entier)
-str = SatelliteObservation.get_str_input('Entrez un str : \n')
-print(str)
-''''''
-satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-
-satellite.tracer_orbite_3d()
-
-    
-
-# Test ajout base de données panda et enregistrement fichier csv
-objet = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
-dictionnaire = objet.lecture_fichier()
-nouveau_dictionnaire = {'SatelliteOrbite': {**dictionnaire.get('Satellite', {}), **dictionnaire.get('Orbite', {})}}
-print(nouveau_dictionnaire)
-nouvelle_data_frame = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
-df = nouvelle_data_frame.ajouter_orbite(nouveau_dictionnaire)
-print(df)
-
-# Test modification d'une orbite
-objet2 = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
-df = objet2.modifier_orbite('Masse', 55107, 45)
-print(df[df['Numero_NORAD'] == 55107])
-
-
-# numero_NORAD = 25631
-# base = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv', dictionnaire)
-# print(base.lire_base_donnees())
-
-# nouvelle_data_frame = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv', dictionnaire)
-# print(nouvelle_data_frame.ajouter_orbite())
-# nouvelle_data_frame.enregistrer_nouvelle_base_donnees()
-
-
-
-
-satellite_1 = SatelliteObservation.Satellite(10, 10500, 5, 50)
-satellite_2 = SatelliteObservation.Satellite(30006, 6, 36.9, 40)
-satellite_3 = SatelliteObservation.Satellite(956, 897,  90, 4000)
-satellite_4 = SatelliteObservation.Satellite(720, 12,  12, 12)
-
-afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
-                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse
-                                                                (satellite_1)[0],
-                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse
-                                                                (satellite_1)[1],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[0],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[1],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[2])
-
-afficher_orbite.get_data()
-afficher_orbite.animate()
-
-# Affichage de plusieurs orbites
-a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
-a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
-a_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[0]
-a_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[0]
-a_satellites = np.array([a_sat_1, a_sat_2, a_sat_3, a_sat_4])
-
-b_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[1]
-b_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[1]
-b_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[1]
-b_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[1]
-b_satellites = np.array([b_sat_1, b_sat_2, b_sat_3, b_sat_4])
-
-positions_sat_1 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_1)[3]
-positions_sat_2 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_2)[3]
-positions_sat_3 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_3)[3]
-positions_sat_4 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_4)[3]
-positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3, positions_sat_4])
-
-# Paramètre qui permet d'afficher ou non les connexions entre les satellites
-afficher_connexions = True
-afficher_terre = True
-afficher_orbite = True
-
-
-
-# test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-# x_pos, y_pos, z_pos = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)
-# position_sat = [x_pos[567], y_pos[567], z_pos[567]]
-# data = SatelliteObservation.TraceAntenne(position_sat)
-# data.tracer_cercle()
-
-'''''

@@ -6,6 +6,8 @@
 import math
 import numpy as np
 
+import SatelliteObservation
+
 masse_terre = 5.974 * (10 ** 24)  # Masse de la Terre en kg
 G = 6.67 * 10 ** (-11)  # Constante gravitationnelle universelle
 rayon_terre = 6374.2  # Rayon de la Terre en km
@@ -60,13 +62,13 @@ class Lire_YAML:
         # Traitement de la donnée d'excentricite
         e_brut = float(ligne_2[4])
         nombre_caracteres = len(str(e_brut))
-        excentricite = e_brut * (10**(-(nombre_caracteres+1)))
+        excentricite = e_brut * (10**(-(nombre_caracteres)))
 
         # Calcul des paramètres à partir des données TLE
 
         periode = (1440 / nbr_revolution) * 60  # période orbitale en s
         mu = G * masse_terre  # on fait l'hypothèse que masse satellite << masse terre
-        a = (mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3)  # calcul du demi grand axe en km
+        a = ((mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3))/1000 # calcul du demi grand axe en km
         r_p = a * (1 - excentricite)  # rayon périgée en km
         r_a = a * (1 + excentricite)  # rayon apogée en km
         apogee = r_a - rayon_terre
@@ -74,5 +76,7 @@ class Lire_YAML:
 
         # Création de tableaux de variables d'entrées:
         donnees_satellite_orbite_TLE = np.array([apogee, perigee, inclinaison, numero_sat, classe_sat, a, excentricite])
+
+        print(a, periode, r_a, r_p, nbr_revolution)
 
         return donnees_satellite_orbite_TLE
