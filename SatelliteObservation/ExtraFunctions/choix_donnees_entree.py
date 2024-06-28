@@ -1,7 +1,8 @@
 # ======================================================================================================================
 # Auteurs: Groupe 5
 # Date: 20/06/2024
-# Programme: Ce programme permet de sélectionner les données d'entrée selon le choix de l'utilisateur
+# Programme: Ce programme permet de sélectionner les données d'entrée selon le choix de l'utilisateur et de les
+# renvoyer sous format de array pour leur utilisation
 # ======================================================================================================================
 
 import SatelliteObservation
@@ -74,10 +75,13 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     input("Appuyez sur Entrée lorsque vous avez terminé de modifier le fichier...")
 
                     # Réinstancer l'objet après modification
+
                     fichier_yaml_TLE = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
                     donnees = fichier_yaml_TLE.donnees_TLE()
 
                 tableau[i] = donnees
+
+                # Transformation des données numériques de la table en float
 
                 numerical_cols = [0, 1, 2, 3, 5, 6]  # Indices des colonnes numériques dans le tableau
 
@@ -102,6 +106,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
             valeurs_ligne = base.appel_base_donnees()
             ligne = valeurs_ligne.values.tolist()[0]
 
+            # Transformation des données numériques de la table en float
             numerical_cols = [0, 1, 2, 3, 4, 5, 6, 10]  # Indices des colonnes numériques dans le tableau
 
             for col_idx in range(11):
@@ -111,18 +116,20 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                 else:
                     tableau[i][col_idx]= ligne[col_idx]
 
-    # Affichage console:
+    # Affichage console en table panda pour plus de lisibilité:
 
     pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
     pd.set_option('display.max_columns', None)  # None pour afficher toutes les colonnes
 
     index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
-    # df = pd.DataFrame(tableau, columns=['Données des satellites'], index =index)
+    columns = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+                          'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
 
-    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', tableau)
+    df = pd.DataFrame(tableau, columns=columns, index =index)
+
+    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df)
 
     return tableau
-
 
 
