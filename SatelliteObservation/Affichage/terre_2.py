@@ -14,7 +14,6 @@ class Terre:
         self.line = None
 
     def creer_geometrie_terre(self):
-        # table des points des latitudes et longitudes de la planète
         # table des angles pour faire le tour de la planète
         theta = np.linspace(0, 2 * np.pi, 201)
 
@@ -29,7 +28,6 @@ class Terre:
                              lon0[2]))
             longs.append(lon)
 
-        # lat0 = self.rayon_terre * np.vstack((cth, sth, zth))
         lats = []
         for phi in (np.pi / 180) * np.arange(-75, 90, 15):
             cph, sph = [f(phi) for f in (np.cos, np.sin)]

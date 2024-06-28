@@ -18,14 +18,14 @@ couleurs = ['r', 'c', 'm', 'y', 'k']
 
 
 class AffichageOrbiteTraceConnexion2:
-    def __init__(self, positions_satellites, a_satellites, b_satellites, actions, noms_sats):
+    def __init__(self, positions_satellites, a_satellites, b_satellites, actions, numeros_NORAD):
         self.positions_satellites = positions_satellites
         self.a_satellites = a_satellites
         self.b_satellites = b_satellites
         self.aff_connexions = actions[0]  # Paramètre pour gérer ou non l'affichage des connexions
         self.aff_terre = actions[1]  # Paramètre pour gérer ou non l'affichage de la Terre
         self.aff_orbite = actions[2]  # Paramètre pour gérer ou non l'affichage des orbites
-        self.noms_sats = noms_sats
+        self.numeros_NORAD = numeros_NORAD
 
         self.satellites = []  # Liste pour stocker les satellites
         self.binomes_satellites = []  # Liste des connexions entre les satellites
@@ -42,7 +42,7 @@ class AffichageOrbiteTraceConnexion2:
             satellite, = self.ax.plot([self.positions_satellites[i, 0, -1]],
                                       [self.positions_satellites[i, 1, -1]],
                                       [self.positions_satellites[i, 2, -1]], 'o',
-                                      color=couleur, markersize=8, label=self.noms_sats[i])
+                                      color=couleur, markersize=8, label=f'Satellite n°: ' + self.numeros_NORAD[i])
             self.satellites.append(satellite)
 
         # Création des objets ConnexionSatellites
@@ -118,5 +118,7 @@ class AffichageOrbiteTraceConnexion2:
     def animate(self):
         anim = animation.FuncAnimation(self.fig, self.update_animation, init_func=self.initialiser_animation,
                                        frames=nb_points, interval=20, blit=True)
+
+        plt.title("Graphe affichant les satellites les attributs souhaités")
         plt.legend()
         plt.show()
