@@ -8,11 +8,15 @@
 import pandas as pd
 import numpy as np
 
+import SatelliteObservation
 
+
+# 28184
+# 33460
 class BaseDonnees:
 
-    def __init__(self, nom_base_donnee, NORAD_number):
-        self.nom_base_donnee = nom_base_donnee
+    def __init__(self, nom_base_donnees, NORAD_number):
+        self.nom_base_donnees = nom_base_donnees
         self.NORAD_number = NORAD_number
 
     # Table utilisée: 'UCS-Satellite-Database 5-1-2023.csv'
@@ -21,14 +25,21 @@ class BaseDonnees:
 
     def lire_base_donnees(self):
 
-        # Lecture du fichier .csv
-        tableau = pd.read_csv(self.nom_base_donnee, delimiter=';', decimal=',', thousands=' ',
-                              usecols=(1, 8, 9, 10, 12, 13, 14, 15, 16, 17, 26))
+        tableau = pd.read_csv(self.nom_base_donnees, delimiter=';', decimal=',', thousands=' ',
+                              usecols=(1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26))
+
 
         # On renomme les colonnes de la table
         tableau.columns = ['Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)',
-                           'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode',
-                           'Masse', 'Numero_NORAD']
+                           'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode', 'Masse',
+                           'Numero_NORAD']
+
+        # Réordonner les colonnes
+        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+                          'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
+
+        tableau = tableau[ordre_colonnes]
+
         return tableau
 
 # Traite la base de données et la renvoie: =============================================================================
@@ -69,3 +80,4 @@ class BaseDonnees:
         donnees_satellite = base_donnees.loc[base_donnees['Numero_NORAD'] == numero_NORAD_sat]
 
         return donnees_satellite
+

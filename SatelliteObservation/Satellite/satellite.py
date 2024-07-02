@@ -12,12 +12,11 @@ g = 9.81  # en m/s2
 
 class Satellite:
 
-    def __init__(self, apogee, perigee, e, inclinaison, masse):
+    def __init__(self, apogee, perigee, inclinaison):
         self.apogee = apogee
         self.perigee = perigee
-        self.e = e
         self.inclinaison = inclinaison
-        self.masse = masse
+
 
     def calcul_rayons_ellipse(self):
         r_a = self.apogee + rayon_terre
@@ -25,7 +24,7 @@ class Satellite:
         return r_a, r_p
 
     def calcul_mu(self):
-        mu = G * (self.masse + masse_terre)
+        mu = G * masse_terre # on fait l'hypothèse que la masse du satellite est négligeable
         return mu
 
     def calcul_parametres_ellipse(self):
