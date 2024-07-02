@@ -1,3 +1,9 @@
+# ==========================================================================================
+# Classe: Connexion_Satellites
+# Cette classe permet de créer des objets connexion_satellites qui permettent de représenter
+# la capacité de 2 satellites a communiquer entre eux et d'en créer une ligne 3D
+# ==========================================================================================
+
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3D
 
@@ -7,13 +13,20 @@ rayon_terre = 6371
 
 class ConnexionSatellites:
 
-    def __init__(self):
+    def __init__(self, binome, positions_sat_1, positions_sat_2):
         self.line = None
+        self.sat_1 = binome[0]
+        self.sat_2 = binome[1]
+        self.positions_sat_1 = positions_sat_1
+        self.positions_sat_2 = positions_sat_2
 
-    def tracer_connexion_entre_satellites(self, ax, position_sat_1, position_sat_2):
-        x_coords = [position_sat_1[0], position_sat_2[0]]
-        y_coords = [position_sat_1[1], position_sat_2[1]]
-        z_coords = [position_sat_1[2], position_sat_2[2]]
+    def tracer_connexion_entre_satellites(self, ax, n):
+        x_coords = [self.positions_sat_1[0, n],
+                    self.positions_sat_2[0, n]]
+        y_coords = [self.positions_sat_1[1, n],
+                    self.positions_sat_2[1, n]]
+        z_coords = [self.positions_sat_1[2, n],
+                    self.positions_sat_2[2, n]]
 
         if self.line is None:  # Créer la ligne la première fois
             self.line = Line3D(x_coords, y_coords, z_coords, color='g', linewidth=2)
