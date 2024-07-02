@@ -1,3 +1,9 @@
+# ==========================================================================================
+# Classe: Connexion_Satellites
+# Cette classe permet de créer des objets connexion_satellites qui permettent de représenter
+# la capacité de 2 satellites a communiquer entre eux et d'en créer une ligne 3D
+# ==========================================================================================
+
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3D
 
@@ -7,26 +13,35 @@ rayon_terre = 6371
 
 class ConnexionSatellites:
 
-    def __init__(self, binome, positions_satellites):
-        self.positions_satellites = positions_satellites
-        self.satellite_1 = binome[0]
-        self.satellite_2 = binome[1]
+    def __init__(self, binome, positions_sat_1, positions_sat_2):
         self.line = None
-
+        self.sat_1 = binome[0]
+        self.sat_2 = binome[1]
+        self.positions_sat_1 = positions_sat_1
+        self.positions_sat_2 = positions_sat_2
+        
+        
     # Trace le segment 3D de connection entre 2 satellites
-    def tracer_connexion_entre_satellites(self, ax):
-        x_coords = [self.positions_satellites[self.satellite_1, 0, -1],
-                    self.positions_satellites[self.satellite_2, 0, -1]]
-        y_coords = [self.positions_satellites[self.satellite_1, 1, -1],
-                    self.positions_satellites[self.satellite_2, 1, -1]]
-        z_coords = [self.positions_satellites[self.satellite_1, 2, -1],
-                    self.positions_satellites[self.satellite_2, 2, -1]]
+    def tracer_connexion_entre_satellites(self, ax, n):
+        x_coords = [self.positions_sat_1[0, n],
+                    self.positions_sat_2[0, n]]
+        y_coords = [self.positions_sat_1[1, n],
+                    self.positions_sat_2[1, n]]
+        z_coords = [self.positions_sat_1[2, n],
+                    self.positions_sat_2[2, n]]
 
         if self.line is None:  # Créer la ligne la première fois
             self.line = Line3D(x_coords, y_coords, z_coords, color='g', linewidth=2)
             ax.add_line(self.line)
         else:  # Mettre à jour la ligne
-            self.line.set_data_3d(x_coords, y_coords, z_coords)
+          
+            # On test si la connexion est possible et on met la ligne à jours 
+            if self.tester_connexion_satellites(n):
+                self.line.set_data_3d(x_coords, y_coords, z_coords)
+                
+            # La connexion n'est pas possible, on ajoute une ligne nulle
+            else:
+                self.line.set_data_3d([0, 0], [0, 0], [0, 0])
 
         return self.line
 
@@ -79,7 +94,7 @@ class ConnexionSatellites:
 
     # Mise à jours de la connection entre les satellites selon les cas de test réalisés
     # On vérifie que la connection peut se faire et on met à jours en fonction du résultat
-    def mettre_a_jour_connexions(self, n):
+    def tester_connexion_satellites(self, n):
         x_coords = [self.positions_satellites[self.satellite_1, 0, n],
                     self.positions_satellites[self.satellite_2, 0, n]]
         y_coords = [self.positions_satellites[self.satellite_1, 1, n],
@@ -108,22 +123,21 @@ class ConnexionSatellites:
 
         # La droite ne passe pas par la Terre, on a la connection
         if test_intersection[0] == -1 :
-            self.line.set_data_3d(x_coords, y_coords, z_coords)
+            return True
 
         # La droite par la Terre, il faut vérifier si cela se fait entre les satellites ou non
         elif test_intersection[0] == 0:
             # Le point d'intersection entre la droite et la Terre n'est pas entre les satellites, on a la connection
             if self.tester_si_terre_entre_sat(test_intersection[1], position_sat_ref, autre_sat):
-                self.line.set_data_3d(x_coords, y_coords, z_coords)
+                return True
             # Le point d'intersection entre la droite et la Terre est entre les satellites, pas de connection
             else:
-                self.line.set_data_3d([0, 0], [0, 0], [0, 0])
+                return False
         else:
             # Tous les points d'intersections entre la droite et la Terre ne sont pas entre les satellites, on a la connection
             if self.tester_si_terre_entre_sat(test_intersection[1], position_sat_ref, autre_sat) and self.tester_si_terre_entre_sat(test_intersection[2], position_sat_ref, autre_sat):
-                self.line.set_data_3d(x_coords, y_coords, z_coords)
+                return True
             # Au moins un des points d'intersections entre la droite et la Terre est entre les satellites, pas de connection
             else:
-                self.line.set_data_3d([0, 0], [0, 0], [0, 0])
-
-        return self.line
+                return False
+   

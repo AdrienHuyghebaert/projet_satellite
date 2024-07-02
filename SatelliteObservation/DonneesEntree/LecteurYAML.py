@@ -1,3 +1,5 @@
+# Lecture du fichier deck.yaml
+
 import yaml
 class LecteurYAML:
     def __init__(self, file_path):
