@@ -7,18 +7,18 @@
 # ========================================= 1) Données satellite ====================================================
 
 Satellite:
-  Nom_Satellite: AISTechSat-2
-  Numero_NORAD : 50209
+  Nom_Satellite: Cosmos 1861
+  Numero_NORAD : 18129
   Masse : 50 # en kg
 Orbite:
-  Apogee (km): 32650 # en km
-  Perigee (km): 30200 # en km
-  Inclinaison (deg) : 45 # en deg
+  Apogee (km): 986 # en km
+  Perigee (km): 995 # en km
+  Inclinaison (deg) : 82.926 # en degrés
   Classe_Orbite: LEO # (LEO, GEO...)
-  Type_Orbite: Sun-Synchronous
-  Longitude (deg): 60
-  Excentricite: 0.00052 # en km
-  Periode : 15
+  Type_Orbite: Unknown
+  Longitude (deg): 2 # en degrés
+  Excentricite: 0.00125 # en km
+  Periode : 104.868 # en min
 
 # ======================================= 2) Données TLE ==========================================================
 
