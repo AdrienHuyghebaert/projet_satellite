@@ -1,12 +1,12 @@
-# ======================================================================================================================
+# ==========================================================================================================================
+# Auteurs: Groupe 5
 # Classe: Lire_YAML
-# Cette classe permet de récupérer les données d'entrées du fichier YAML deck.yaml
-# ======================================================================================================================
+# Fonction: Cette classe permet de récupérer les données d'entrées du fichier YAML deck.yaml et de les renvoyer sous forme de tableau
+# ==========================================================================================================================
 
 import math
 import numpy as np
 
-import SatelliteObservation
 
 masse_terre = 5.974 * (10 ** 24)  # Masse de la Terre en kg
 G = 6.67 * 10 ** (-11)  # Constante gravitationnelle universelle
@@ -63,7 +63,7 @@ class Lire_YAML:
         # Traitement de la donnée d'excentricite
         e_brut = float(ligne_2[4])
         nombre_caracteres = len(str(e_brut))
-        excentricite = e_brut * (10**(-(nombre_caracteres)))
+        excentricite = e_brut * (10**(-nombre_caracteres))
 
         # Calcul des paramètres à partir des données TLE
 

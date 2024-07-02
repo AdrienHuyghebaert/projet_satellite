@@ -34,9 +34,13 @@ class ConnexionSatellites:
             self.line = Line3D(x_coords, y_coords, z_coords, color='g', linewidth=2)
             ax.add_line(self.line)
         else:  # Mettre à jour la ligne
-          
+
+            # On crée les tables de position des satellites
+            position_sat_1 = np.array([x_coords[0], y_coords[0], z_coords[0]])
+            position_sat_2 = np.array([x_coords[1], y_coords[1], z_coords[1]])
+
             # On test si la connexion est possible et on met la ligne à jours 
-            if self.tester_connexion_satellites(n):
+            if self.tester_connexion_satellites( position_sat_1, position_sat_2):
                 self.line.set_data_3d(x_coords, y_coords, z_coords)
                 
             # La connexion n'est pas possible, on ajoute une ligne nulle
@@ -94,17 +98,7 @@ class ConnexionSatellites:
 
     # Mise à jours de la connection entre les satellites selon les cas de test réalisés
     # On vérifie que la connection peut se faire et on met à jours en fonction du résultat
-    def tester_connexion_satellites(self, n):
-        x_coords = [self.positions_satellites[self.satellite_1, 0, n],
-                    self.positions_satellites[self.satellite_2, 0, n]]
-        y_coords = [self.positions_satellites[self.satellite_1, 1, n],
-                    self.positions_satellites[self.satellite_2, 1, n]]
-        z_coords = [self.positions_satellites[self.satellite_1, 2, n],
-                    self.positions_satellites[self.satellite_2, 2, n]]
-
-        # On crée les tables de position des satellites
-        position_sat_1 = np.array([x_coords[0], y_coords[0], z_coords[0]])
-        position_sat_2 = np.array([x_coords[1], y_coords[1], z_coords[1]])
+    def tester_connexion_satellites(self, position_sat_1, position_sat_2):
 
         # Segment entre les deux satellites et choix du satellite le plus éloigné
         dist_sat_1 = np.abs(np.linalg.norm(position_sat_1))

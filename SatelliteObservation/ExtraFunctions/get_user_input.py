@@ -1,5 +1,11 @@
-#Ce script contient plusieurs fonctions permettant de s'assurer
-# que le format de donnée que l'utilisateur rentre est le bon.
+# ==========================================================================================
+# Auteurs: Groupe 5
+# Date : 02/07/24
+# Fonction: Ce script contient plusieurs fonctions permettant de s'assurer
+# # que le format de donnée que l'utilisateur rentre est le bon.
+# ==========================================================================================
+
+import SatelliteObservation
 
 '''Flottant'''
 
@@ -52,7 +58,17 @@ def get_str_input(prompt):
             print("Invalid input, please try again.")
     return value
 
-# Convertit les chaines de caractères en booléen
 
-def str_to_bool(s):
-    return s.lower() == 'true'
+'''Booleen'''
+
+def get_boolean_input(prompt):
+
+    while True:
+        user_input = SatelliteObservation.get_str_input(prompt).strip().lower()
+        if user_input == 'true':
+            return True
+        elif user_input == 'false':
+            return False
+        else:
+            print("Entrée invalide. Réessayez en répondant par 'True' ou 'False'")
+

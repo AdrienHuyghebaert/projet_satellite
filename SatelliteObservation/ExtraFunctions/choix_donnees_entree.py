@@ -1,8 +1,8 @@
 # ======================================================================================================================
 # Auteurs: Groupe 5
-# Date: 20/06/2024
-# Programme: Ce programme permet de sélectionner les données d'entrée selon le choix de l'utilisateur et de les
-# renvoyer sous format de array pour leur utilisation
+# Date: 02/07/2024
+# Fonction: Ce programme permet de sélectionner les données d'entrée selon le choix de l'utilisateur et de les
+# renvoyer sous format de tableau numpy pour leur utilisation dans affichage
 # ======================================================================================================================
 
 import SatelliteObservation
@@ -28,7 +28,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     f"Avez-vous déjà modifié le fichier deck.yaml pour le satellite {i + 1} ? (oui/non): ").lower()
 
                 if reponse == 'oui':
-                    fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml') # instanciation objet
+                    fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml') # instanciation objet classe
                     donnees_sat = fichier_yaml.donnees_satellite()[1]
                     donnees_orb = fichier_yaml.donnees_satellite()[0]
                     concat_dict = {**donnees_orb, **donnees_sat}
@@ -38,17 +38,19 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
 
                     # Réinstancer l'objet après modification
-                    fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # instanciation objet
+                    fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # instanciation objet class
                     donnees_sat = fichier_yaml.donnees_satellite()[1]
                     donnees_orb = fichier_yaml.donnees_satellite()[0]
                     concat_dict = {**donnees_orb, **donnees_sat}
 
+                # Permet de mettre le numéro NORAD  à l'endroit voulu dans la liste
                 liste = list(concat_dict.values())
                 numero_norad = liste.pop(9)
                 liste.insert(3, numero_norad)
 
-                numerical_cols = [0, 1, 2, 3, 6, 7, 8, 10]  # Indices des colonnes numériques dans le tableau
+                numerical_cols = [0, 1, 2, 3, 6, 7, 8, 10]  # Indices des colonnes numériques (float) dans le tableau
 
+                # # Modifications du type des données numériques de string à float dans un tableau numpy
                 for col_idx in range(11):
                     if col_idx in numerical_cols:
                         tableau[i][col_idx] = float(liste[col_idx])
@@ -68,23 +70,25 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                 # Vérifier si l'utilisateur a déjà modifié le fichier deck.yaml pour le satellite
                 reponse = input(
                     f"Avez-vous déjà modifié le fichier deck.yaml pour le satellite {i + 1} ? (oui/non): ").lower()
+
                 if reponse == 'oui':
                     fichier_yaml_TLE = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # Instanciation de l'objet
                     donnees = fichier_yaml_TLE.donnees_TLE()
+
                 else:
                     input("Appuyez sur Entrée lorsque vous avez terminé de modifier le fichier...")
 
-                    # Réinstancer l'objet après modification
+                    # Réinstancer l'objet de la classe après modification
 
                     fichier_yaml_TLE = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
                     donnees = fichier_yaml_TLE.donnees_TLE()
 
                 tableau[i] = donnees
 
-                # Transformation des données numériques de la table en float
 
-                numerical_cols = [0, 1, 2, 3, 5, 6]  # Indices des colonnes numériques dans le tableau
+                numerical_cols = [0, 1, 2, 3, 5, 6]  # Indices des colonnes numériques (float) dans le tableau
 
+                # Modifications du type des données numériques de string à float dans un tableau numpy
                 for col_idx in range(7):
                     if col_idx in numerical_cols:
                         tableau[i][col_idx] = float(tableau[i][col_idx])
@@ -100,14 +104,24 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
 
         for i in range(nombre_satellite):
-            numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier (5 chiffres):')
-            base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)
+            while True:
+                numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier (5 chiffres):')
 
-            # Conversion de la ligne de donnée de la data frame en tableau numpy
-            valeurs_ligne = base.appel_base_donnees()
-            ligne = valeurs_ligne.values.tolist()[0]
+                base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)
+                base_donnees = base.appel_base_donnees()[1]
+
+            # Conversion de la ligne de donnée de la data frame en tableau numpy si le numéro NORAD existe
+                if numero_NORAD in base_donnees['Numero_NORAD'].values:
+                    valeurs_ligne = base.appel_base_donnees()[0]
+                    ligne = valeurs_ligne.values.tolist()[0]
+                    break
+
+                else:
+                    print("Ce numéro n'existe pas dans la base de données veuillez réessayer !")
+
 
             # Transformation des données numériques de la table en float
+
             numerical_cols = [0, 1, 2, 3, 4, 5, 6, 10]  # Indices des colonnes numériques dans le tableau
 
             for col_idx in range(11):
@@ -129,8 +143,6 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     df = pd.DataFrame(tableau, columns=columns, index =index)
 
-    print('\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df)
+    print('\n', '='*150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n', '='*150)
 
     return tableau
-
-

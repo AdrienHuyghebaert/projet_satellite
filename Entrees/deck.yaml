@@ -1,17 +1,18 @@
-# Fichier YAML: Donnée utilisateurs
+#Fichier YAML: Données entrée utilisateur
 
-# Instructions: Veuillez compléter le fichier avec vos valeurs d'entrees
+#Instructions: Veuillez compléter le fichier avec vos valeurs d'entrée
 
 
-# ======================================= 1) Données satellite ====================================================
+
+# ========================================= 1) Données satellite ====================================================
 
 Satellite:
   Nom_Satellite: AISTechSat-2
-  Numero_NORAD : 51508
-  Masse : 22 # en kg
+  Numero_NORAD : 50209
+  Masse : 50 # en kg
 Orbite:
-  Apogee (km): 750 # en km
-  Perigee (km): 500 # en km
+  Apogee (km): 32650 # en km
+  Perigee (km): 30200 # en km
   Inclinaison (deg) : 45 # en deg
   Classe_Orbite: LEO # (LEO, GEO...)
   Type_Orbite: Sun-Synchronous
@@ -21,14 +22,12 @@ Orbite:
 
 # ======================================= 2) Données TLE ==========================================================
 
-# Ex TLE : ISS (ZARYA)
 
-# TLE_ligne1: 1 25544U 98067A   20300.83097691  .00001534  00000-0  35580-4 0  9996
-# TLE_ligne2: 2 25544  51.6453  57.0843 0001671  64.9808  73.0513 15.49338189252428
-
+#Ex TLE : ISS (ZARYA)
+#
 #TLE_ligne1: 1 25544U 98067A   20300.83097691  .00001534  00000-0  35580-4 0  9996
-
 #TLE_ligne2: 2 25544  51.6453  57.0843 0001671  64.9808  73.0513 15.49338189252428
+
 
 TLE_ligne1: 1 18129U 87054A 97188.14787213 .00000019 00000-0 39328-5 0 03816
 

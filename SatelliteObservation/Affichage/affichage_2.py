@@ -26,6 +26,7 @@ class AffichageOrbiteTraceConnexion2:
         self.aff_connexions = actions[0]  # Paramètre pour gérer ou non l'affichage des connexions
         self.aff_terre = actions[1]  # Paramètre pour gérer ou non l'affichage de la Terre
         self.aff_orbite = actions[2]  # Paramètre pour gérer ou non l'affichage des orbites
+        self.aff_antenne = actions[3]  # Paramètre pour gérer ou non l'affichage des antennes
         self.numeros_NORAD = numeros_NORAD
 
         self.satellites = []  # Liste pour stocker les satellites
@@ -57,13 +58,13 @@ class AffichageOrbiteTraceConnexion2:
                     connexion = ConnexionSatellites((i, j), self.positions_satellites[i], self.positions_satellites[j])
                     self.lignes_connexion[(i, j)] = connexion  # Ajout de l'objet connexion dans le dictionnaire
 
-        '''''
+
         # Création des objets Antenne
         if self.aff_antenne:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):  # Ajouter chaque couple unique de satellites
                 antenne = Antenne(self.positions_satellites[i])  # Création de l'objet connexion
                 self.lignes_antenne[i] = antenne  # Ajout de l'objet connexion dans le dictionnaire
-        '''''
+
     def initialiser_animation(self):
 
         # Définition des bornes d'affichage
@@ -89,13 +90,13 @@ class AffichageOrbiteTraceConnexion2:
                         (self.ax, n=0))
                 artists.append(line)
 
-        '''''
+
         # Initialisation animation des antennes
         if self.aff_antenne:
             for i in range(len(self.positions_satellites)):
                 line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, -1)
                 artists.append(line)
-        '''''
+
 
         # Affichage de la Terre
         if self.aff_terre:
@@ -124,12 +125,12 @@ class AffichageOrbiteTraceConnexion2:
             self.satellites[i].set_3d_properties([z])
             artists.append(self.satellites[i])
 
-            '''''
+
             # Mettre à jours toutes les antennes des satellites
             if self.aff_antenne:
                 line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, n)
                 artists.append(line)
-            '''''
+
 
         # Mettre à jour toutes les lignes de connexion entre les satellites
         if self.aff_connexions:
@@ -144,6 +145,6 @@ class AffichageOrbiteTraceConnexion2:
         anim = animation.FuncAnimation(self.fig, self.update_animation, init_func=self.initialiser_animation,
                                        frames=nb_points, interval=20, blit=True)
 
-        plt.title("Graphe affichant les satellites les attributs souhaités")
+        plt.title("Graphique affichant les satellites et les attributs souhaités")
         plt.legend()
         plt.show()

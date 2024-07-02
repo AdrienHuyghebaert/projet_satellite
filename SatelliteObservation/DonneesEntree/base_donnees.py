@@ -1,9 +1,9 @@
-# ==========================================================================================
+# ====================================================================================================================
 # Classe: BaseDonnees
-# Date : 25/06/24
-# Cette classe permet de gérer la base de données des satellite et de chercher les informations d'un satellite
+# Date : 02/07/24
+# Fonction: Cette classe permet de gérer la base de données des satellite et de chercher les informations d'un satellite
 # par son numéro d'identification NORAD
-# ==========================================================================================
+# ======================================================================================================================
 
 import pandas as pd
 import numpy as np
@@ -60,9 +60,6 @@ class BaseDonnees:
         for col in ['Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode']:
             df[col] = df[col].astype(float)
 
-        # Ne garder que les satellites en orbite basse LEO
-        # df_LEO = df[df['Class of Orbit'] == 'LEO'].reset_index(drop=True)
-
         return df
 
 # Enregistre la nouvelle base de donnée sous un fichier csv: ===========================================================
@@ -77,7 +74,9 @@ class BaseDonnees:
 
         # Trouver un satellite par son numéro
         numero_NORAD_sat = self.NORAD_number
+
+
         donnees_satellite = base_donnees.loc[base_donnees['Numero_NORAD'] == numero_NORAD_sat]
 
-        return donnees_satellite
+        return donnees_satellite, base_donnees
 
