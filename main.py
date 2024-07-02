@@ -47,28 +47,35 @@ if __name__ == '__main__':
                                                                'vous souhaitez afficher (max 5): \n')
             donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, nbr_satellite)
 
+            numeros_norad = []
             donnees_satellites = np.zeros((len(donnees_entree)))
             position_satellites = np.zeros((len(donnees_entree), 3, 1000), dtype=object)
 
+            actions = [0, 0 ,0]
             a_satellites = np.zeros((len(donnees_entree)), dtype=object)
             b_satellites = np.zeros((len(donnees_entree)), dtype=object)
-            afficher_connexion = SatelliteObservation.get_str_input('\nSouhaitez-vous afficher les connexions (Répondre: True or False)? ')
-            afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)? ')
-            afficher_orbite = SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)? ")
+            actions[0] = (SatelliteObservation.get_str_input('\nSouhaitez-vous afficher les connexions (Répondre: True or False)? '))
+            actions[1] = (SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)? '))
+            actions[2] = (SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)? "))
 
+            # Récupération des actions sous forme de booléen
+            actions_bool = [SatelliteObservation.str_to_bool(s) for s in actions]
+
+            # On récupère les données pour chaque satellite
             for i in range(len(donnees_entree)):
                 satellite = SatelliteObservation.Satellite(donnees_entree[i][0], donnees_entree[i][1], donnees_entree[i][2])
                 position_satellites[i] = satellite.calcul_coord_ellipse_inclinee()[3]
                 a_satellites[i] = satellite.calcul_parametres_ellipse()[0]
                 b_satellites[i] = satellite.calcul_parametres_ellipse()[1]
-            SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites, b_satellites, afficher_connexion, afficher_terre, afficher_orbite)
+                numeros_norad.append(donnees_entree[i][3])
 
-            # Affichage des orbites avec les paramètres voulus
+            string_numeros_norad = list(map(str, numeros_norad))
+
+            # Affichage des orbites avec les paramètres souhaités
 
             affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites,
                                                                             b_satellites,
-                                                                            afficher_connexion, afficher_terre,
-                                                                            afficher_orbite)
+                                                                            actions_bool, string_numeros_norad)
             affichage.animate()
 
 

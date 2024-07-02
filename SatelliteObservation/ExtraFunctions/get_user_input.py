@@ -51,3 +51,8 @@ def get_str_input(prompt):
             # If input is not a float we get a ValueError
             print("Invalid input, please try again.")
     return value
+
+# Convertit les chaines de caractères en booléen
+
+def str_to_bool(s):
+    return s.lower() == 'true'

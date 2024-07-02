@@ -98,6 +98,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
         tableau = np.zeros((nombre_satellite, 11), dtype=object)
 
+
         for i in range(nombre_satellite):
             numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier (5 chiffres):')
             base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)

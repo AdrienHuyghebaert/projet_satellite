@@ -57,12 +57,13 @@ class AffichageOrbiteTraceConnexion2:
                     connexion = ConnexionSatellites((i, j), self.positions_satellites[i], self.positions_satellites[j])
                     self.lignes_connexion[(i, j)] = connexion  # Ajout de l'objet connexion dans le dictionnaire
 
+        '''''
         # Création des objets Antenne
         if self.aff_antenne:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):  # Ajouter chaque couple unique de satellites
                 antenne = Antenne()  # Création de l'objet connexion
                 self.lignes_antenne[i] = antenne  # Ajout de l'objet connexion dans le dictionnaire
-
+        '''''
     def initialiser_animation(self):
 
         # Définition des bornes d'affichage
@@ -88,6 +89,7 @@ class AffichageOrbiteTraceConnexion2:
                         (self.ax, n=0))
                 artists.append(line)
 
+        '''''
         # Initialisation animation des antennes
         if self.aff_antenne:
             for i in range(len(self.positions_satellites)):
@@ -97,6 +99,7 @@ class AffichageOrbiteTraceConnexion2:
                 position_sat = np.array([x, y, z])
                 line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, position_sat)
                 artists.append(line)
+        '''''
 
         # Affichage de la Terre
         if self.aff_terre:
@@ -125,11 +128,13 @@ class AffichageOrbiteTraceConnexion2:
             self.satellites[i].set_3d_properties([z])
             artists.append(self.satellites[i])
 
+            '''''
             # Mettre à jours toutes les antennes des satellites
             if self.aff_antenne:
                 position_satellite = np.array([x, y, z])
                 line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, position_satellite)
                 artists.append(line)
+            '''''
 
         # Mettre à jour toutes les lignes de connexion entre les satellites
         if self.aff_connexions:
