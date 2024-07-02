@@ -10,18 +10,15 @@ import numpy as np
 import os
 
 
-
 class AjoutOrbite:
     def __init__(self, nom_base_donnees):
         self.nom_base_donnees = nom_base_donnees
 
-
-# Retourner la table panda avec les colonnes sélectionnées:=============================================================
+    # Retourner la table panda avec les colonnes sélectionnées:=========================================================
     def lire_base_donnees(self):
 
         tableau = pd.read_csv(self.nom_base_donnees, delimiter=';', decimal=',', thousands=' ',
                               usecols=(1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26))
-
 
         # On renomme les colonnes de la table
         tableau.columns = ['Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)',
@@ -29,14 +26,15 @@ class AjoutOrbite:
                            'Numero_NORAD']
 
         # Réordonner les colonnes
-        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode',
+                          'Excentricite',
                           'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
 
         tableau = tableau[ordre_colonnes]
 
         return tableau
 
-# Traite la base de données et la renvoie: =============================================================================
+    # Traite la base de données et la renvoie: =========================================================================
     def traitement_base_donnees(self):
 
         df = self.lire_base_donnees()
@@ -55,7 +53,7 @@ class AjoutOrbite:
 
         return df
 
-# Ajouter une nouvelle ligne dans la data frame et enregistre le fichier csv correspondant: =======================================================================
+    # Ajouter une nouvelle ligne dans la data frame et enregistre le fichier csv correspondant: ========================
 
     def ajouter_orbite(self, donnees, deja_modifie):
 
@@ -81,8 +79,7 @@ class AjoutOrbite:
         new_data_frame.to_csv(nom_fichier_csv, index=False)
         return new_data_frame
 
-
-# Modifie une donnée d'une orbite existante dans la data frame et enregistre le fichier csv: =======================================================================
+    # Modifie une donnée d'une orbite existante dans la data frame et enregistre le fichier csv: =======================
     def modifier_orbite(self, nom_colonne, numero_NORAD, valeur_modifiee, deja_modifie):
 
         if deja_modifie == True:
@@ -93,7 +90,6 @@ class AjoutOrbite:
         elif deja_modifie == False:
 
             df = self.traitement_base_donnees()
-
 
         df.loc[df['Numero_NORAD'] == numero_NORAD, nom_colonne] = valeur_modifiee
 

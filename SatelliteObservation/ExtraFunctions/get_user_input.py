@@ -9,6 +9,7 @@ import SatelliteObservation
 
 '''Flottant'''
 
+
 def get_float_input(prompt):
     while True:
         # Constantly check if a value was entered followed by Enter
@@ -24,8 +25,8 @@ def get_float_input(prompt):
     return value
 
 
-
 '''Entier'''
+
 
 def get_int_input(prompt):
     while True:
@@ -44,6 +45,7 @@ def get_int_input(prompt):
 
 '''Chaine de caractère'''
 
+
 def get_str_input(prompt):
     while True:
         # Constantly check if a value was entered followed by Enter
@@ -61,8 +63,8 @@ def get_str_input(prompt):
 
 '''Booleen'''
 
-def get_boolean_input(prompt):
 
+def get_boolean_input(prompt):
     while True:
         user_input = SatelliteObservation.get_str_input(prompt).strip().lower()
         if user_input == 'true':
@@ -71,4 +73,3 @@ def get_boolean_input(prompt):
             return False
         else:
             print("Entrée invalide. Réessayez en répondant par 'True' ou 'False'")
-

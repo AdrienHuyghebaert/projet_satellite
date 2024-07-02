@@ -28,15 +28,14 @@ class BaseDonnees:
         tableau = pd.read_csv(self.nom_base_donnees, delimiter=';', decimal=',', thousands=' ',
                               usecols=(1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 26))
 
-
         # On renomme les colonnes de la table
         tableau.columns = ['Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)',
                            'Perigee (km)', 'Apogee (km)', 'Excentricite', 'Inclinaison (deg)', 'Periode', 'Masse',
                            'Numero_NORAD']
 
         # Réordonner les colonnes
-        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
-                          'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
+        ordre_colonnes = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode',
+                          'Excentricite', 'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
 
         tableau = tableau[ordre_colonnes]
 
@@ -75,8 +74,6 @@ class BaseDonnees:
         # Trouver un satellite par son numéro
         numero_NORAD_sat = self.NORAD_number
 
-
         donnees_satellite = base_donnees.loc[base_donnees['Numero_NORAD'] == numero_NORAD_sat]
 
         return donnees_satellite, base_donnees
-

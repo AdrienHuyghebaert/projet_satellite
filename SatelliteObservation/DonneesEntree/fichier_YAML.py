@@ -1,8 +1,9 @@
-# ==========================================================================================================================
+# ======================================================================================================================
 # Auteurs: Groupe 5
 # Classe: Lire_YAML
-# Fonction: Cette classe permet de récupérer les données d'entrées du fichier YAML deck.yaml et de les renvoyer sous forme de tableau
-# ==========================================================================================================================
+# Fonction: Cette classe permet de récupérer les données d'entrées du fichier YAML deck.yaml
+# et de les renvoyer sous forme de tableau
+# ======================================================================================================================
 
 import math
 import numpy as np
@@ -69,7 +70,7 @@ class Lire_YAML:
 
         periode = (1440 / nbr_revolution) * 60  # période orbitale en s
         mu = G * masse_terre  # on fait l'hypothèse que masse satellite << masse terre
-        a = ((mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3))/1000 # calcul du demi grand axe en km
+        a = ((mu * (periode / (2 * math.pi)) ** 2) ** (1 / 3))/1000  # calcul du demi grand axe en km
         r_p = a * (1 - excentricite)  # rayon périgée en km
         r_a = a * (1 + excentricite)  # rayon apogée en km
         apogee = r_a - rayon_terre
