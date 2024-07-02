@@ -2,14 +2,15 @@ import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3D
 
 
-# Constantes
+# Constantes (pourraient être initialisées dans l'avenir
 rayon_terre = 6371  # km
 angle_antenne = 13 # °
 resolution = 50  # nbr de points sur le cercle
 
 
 class Antenne:
-    def __init__(self):
+    def __init__(self, positions_satellite):
+        self.positions_satellite = positions_satellite
         self.angle_antenne =  angle_antenne
         self.resolution = resolution
         self.rayon_planete = rayon_terre
@@ -30,11 +31,9 @@ class Antenne:
 
         # creation des points correspondants au cercle projeté sur la Terre par le cone de l'antenne du satellite
         point_intersection_cercle = self.intersection_ligne_cercle(vect_cone, position_satellite)
-        print(point_intersection_cercle)
 
         # Disjontion de cas si l'antenne couvre toute la planette
         if np.all(point_intersection_cercle == np.zeros(3)):
-            point_projete = point_intersection_cercle
 
             # On crée deux vecteurs perpendiculaires dans le plan pour tracer le cercle
             vect_direction_norm = vect_direction / np.linalg.norm(vect_direction)  # Vecteur direction normé entre le centre de la terre et du satellite
@@ -72,6 +71,7 @@ class Antenne:
             pos_z = point_projete[2] + rayon_cercle * (v1_plan_cercle[2] * np.cos(theta) + v2_plan_cercle[2] * np.sin(theta))
 
         return pos_x, pos_y, pos_z
+
 
     # Cette fonction à été réalisée à l'aide de ChatGPT
     # prompt : coordonnées d'un point d'intersection entre une droite et un cercle
@@ -138,7 +138,11 @@ class Antenne:
 
         return direction_modif
 
-    def tracer_cercle_antenne(self, ax, position_satellite):
+    def tracer_cercle_antenne(self, ax, n):
+        # Position de l'antenne pour n
+        position_satellite = np.array([self.positions_satellite[0, n],
+                                       self.positions_satellite[1, n],
+                                       self.positions_satellite[2, n]])
         x_coords, y_coords, z_coords = self.creer_cercle(position_satellite)
 
         if self.line is None:  # Créer la ligne la première fois

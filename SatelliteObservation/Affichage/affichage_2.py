@@ -61,7 +61,7 @@ class AffichageOrbiteTraceConnexion2:
         # Création des objets Antenne
         if self.aff_antenne:  # Si True alors on rentre
             for i in range(len(self.positions_satellites)):  # Ajouter chaque couple unique de satellites
-                antenne = Antenne()  # Création de l'objet connexion
+                antenne = Antenne(self.positions_satellites[i])  # Création de l'objet connexion
                 self.lignes_antenne[i] = antenne  # Ajout de l'objet connexion dans le dictionnaire
         '''''
     def initialiser_animation(self):
@@ -93,11 +93,7 @@ class AffichageOrbiteTraceConnexion2:
         # Initialisation animation des antennes
         if self.aff_antenne:
             for i in range(len(self.positions_satellites)):
-                x = self.positions_satellites[i, 0, -1]
-                y = self.positions_satellites[i, 1, -1]
-                z = self.positions_satellites[i, 2, -1]
-                position_sat = np.array([x, y, z])
-                line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, position_sat)
+                line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, -1)
                 artists.append(line)
         '''''
 
@@ -131,8 +127,7 @@ class AffichageOrbiteTraceConnexion2:
             '''''
             # Mettre à jours toutes les antennes des satellites
             if self.aff_antenne:
-                position_satellite = np.array([x, y, z])
-                line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, position_satellite)
+                line = self.lignes_antenne[i].tracer_cercle_antenne(self.ax, n)
                 artists.append(line)
             '''''
 
