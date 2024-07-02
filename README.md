@@ -52,8 +52,9 @@ Comme une image est toujours plus explicite voici les fonctionnalitées impléme
 - base de données fournie: https://www.ucsusa.org/resources/satellite-database
 
 **Données de sortie**
-
-
+- fichier csv de base de données
+- graphique: orbites des satellites + terre + connexions + légende
+- affichage console: tableau panda des données des satellites à afficher
 
 
 **Structure du code**
@@ -73,4 +74,32 @@ Le code contient les packages et les classes suivants:
     - affichage: permet de gérer tout l'affichage et l'animation des satellites, des orbites, des connexions, des traces et de la Terre
     - terre: class qui est appelée par affichage (si l'utilisateur souhaite l'afficher) et retourne des lignes 3D formant la Terre
     - orbite: class qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui calcul les orbites pour des satellites et retourne les lignes 3D correspondantes
-    - connexions_satellites: class qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui détermine si il y a une communication possible entre les satellites et            retourne une ligne 3D entre ces 2 derniers si la condition est remplie
+    - connexions_satellites: class qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui détermine si il y a une communication possible entre les satellites et retourne une ligne 3D entre ces 2 derniers si la condition est remplie
+
+
+
+**Utilisation du code**
+
+Pour utiliser le programme, l'utilisateur doit lancer le main. Toutes les instructions seront affichées dans la console.
+
+L'utilisateur peut choisir entre différentes actions possibles:
+- Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de satellites et/ou Affiche la trace d'un satellite sur la Terre
+- Ajouter les données d'un satellite dans la base de données (2)
+- Modifier des données d'orbite d'un satellite de la base de données (3)
+- Quitter le programme (4)
+
+Pour l'action (1) l'utilisateur aura:
+
+2 choix pour les données d'entrée:
+- trouver des satellites dans la base de données csv à partir du numéro NORAD (Le Satellite Catalog Number ou identifiant NORAD est un identifiant à 5 chiffres assigné par les autorités militaires américaines à tout objet placé en orbite autour de la Terre)
+- rentrer lui-même les paramètres d'un satellite dans le fichier YAML ou les données TLE dans le fichier YAML
+
+3 choix d'affichage:
+- Terre
+- connexions
+- orbites
+
+Pour les actions (2) et (3), l'utilisateur devra rentrer les données du satellite à ajouter/modifier dans le fichier deck.yaml
+Si c'est la première fois qu'il réalise l'une ou l'autre des deux opérations, un fichier csv sera créé dans le dossier 'Entrées' afin de garder la base de données intacte. 
+A la suite, s'il réalise à nouveau les actions (2) ou (3), les modifications seront ajoutées au fichier csv créé pour l'utilisateur.
+
