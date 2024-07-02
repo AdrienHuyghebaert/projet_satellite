@@ -19,9 +19,8 @@ class ConnexionSatellites:
         self.sat_2 = binome[1]
         self.positions_sat_1 = positions_sat_1
         self.positions_sat_2 = positions_sat_2
-        
-        
-    # Trace le segment 3D de connection entre 2 satellites
+
+    # Trace le segment 3D de connexion entre 2 satellites
     def tracer_connexion_entre_satellites(self, ax, n):
         x_coords = [self.positions_sat_1[0, n],
                     self.positions_sat_2[0, n]]
@@ -35,22 +34,21 @@ class ConnexionSatellites:
             ax.add_line(self.line)
         else:  # Mettre à jour la ligne
 
-            # On crée les tables de position des satellites
+            # On créé la table des position des satellites
             position_sat_1 = np.array([x_coords[0], y_coords[0], z_coords[0]])
             position_sat_2 = np.array([x_coords[1], y_coords[1], z_coords[1]])
 
-            # On test si la connexion est possible et on met la ligne à jours 
-            if self.tester_connexion_satellites( position_sat_1, position_sat_2):
+            # On teste si la connexion est possible et on met la ligne à jour
+            if self.tester_connexion_satellites(position_sat_1, position_sat_2):
                 self.line.set_data_3d(x_coords, y_coords, z_coords)
-                
-            # La connexion n'est pas possible, on ajoute une ligne nulle
+
+            # La connexion n'est pas possible, on retourne une ligne nulle
             else:
                 self.line.set_data_3d([0, 0], [0, 0], [0, 0])
 
         return self.line
 
-
-    # Cette fonction à été réalisée à l'aide de ChatGPT
+    # Cette fonction a été réalisée à l'aide de ChatGPT
     # prompt : coordonnées d'un point d'intersection entre une droite et un cercle
     # Pour réaliser le calcul d'intersection entre la droite du cone et le cercle de la terre
     # on utilise la résolution d'une équation de second degrès (voir https://www.youtube.com/watch?v=zIsBk05vvjw)
@@ -81,23 +79,22 @@ class ConnexionSatellites:
             point2 = point_droite + t2 * vect  # coordonnées du point 2
             return [1, point1, point2]
 
-
     # On vérifie que le point d'intersection avec le cercle trouvé précédemment est bien entre les satellites
     def tester_si_terre_entre_sat(self, pos_point, position_sat_1, position_sat_2):
         # Creation des segments à tester
         sat_1_sat_2 = position_sat_2 - position_sat_1
         sat_1_point = pos_point - position_sat_1
 
-        # On créer le coefficient de colinéarité
-        coef_col = sat_1_point/sat_1_sat_2
+        # On créé le coefficient de colinéarité
+        coef_col = sat_1_point / sat_1_sat_2
         # On retourne False si le point est entre les satellites
-        if 1>= coef_col[1] >= 0:
+        if 1 >= coef_col[1] >= 0:
             return False
         else:
             return True
 
-    # Mise à jours de la connection entre les satellites selon les cas de test réalisés
-    # On vérifie que la connection peut se faire et on met à jours en fonction du résultat
+    # Mise à jour de la connexion entre les satellites selon les cas de test réalisés
+    # On vérifie que la connexion peut se faire et on met à jour en fonction du résultat
     def tester_connexion_satellites(self, position_sat_1, position_sat_2):
 
         # Segment entre les deux satellites et choix du satellite le plus éloigné
@@ -112,26 +109,30 @@ class ConnexionSatellites:
             position_sat_ref = position_sat_2
             autre_sat = position_sat_1
 
-        # On test si la droite de connection passe par la Terre
+        # On teste si la droite de connexion passe par la Terre
         test_intersection = self.intersection_ligne_cercle(vect, position_sat_ref)
 
-        # La droite ne passe pas par la Terre, on a la connection
-        if test_intersection[0] == -1 :
+        # La droite ne passe pas par la Terre, on a la connexion
+        if test_intersection[0] == -1:
             return True
 
         # La droite par la Terre, il faut vérifier si cela se fait entre les satellites ou non
         elif test_intersection[0] == 0:
-            # Le point d'intersection entre la droite et la Terre n'est pas entre les satellites, on a la connection
+            # Le point d'intersection entre la droite et la Terre n'est pas entre les satellites, on a la connexion
             if self.tester_si_terre_entre_sat(test_intersection[1], position_sat_ref, autre_sat):
                 return True
-            # Le point d'intersection entre la droite et la Terre est entre les satellites, pas de connection
+            # Le point d'intersection entre la droite et la Terre est entre les satellites, pas de connexion
             else:
                 return False
         else:
-            # Tous les points d'intersections entre la droite et la Terre ne sont pas entre les satellites, on a la connection
-            if self.tester_si_terre_entre_sat(test_intersection[1], position_sat_ref, autre_sat) and self.tester_si_terre_entre_sat(test_intersection[2], position_sat_ref, autre_sat):
+            # Tous les points d'intersections entre la droite et la Terre ne sont pas entre les satellites,
+            # on a la connexion
+            if self.tester_si_terre_entre_sat(test_intersection[1], position_sat_ref,
+                                              autre_sat) and self.tester_si_terre_entre_sat(test_intersection[2],
+                                                                                            position_sat_ref,
+                                                                                            autre_sat):
                 return True
-            # Au moins un des points d'intersections entre la droite et la Terre est entre les satellites, pas de connection
+            # Au moins un des points d'intersections entre la droite et la Terre est entre les satellites,
+            # pas de connexion
             else:
                 return False
-   
