@@ -58,7 +58,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                         tableau[i][col_idx] = liste[col_idx]
 
         # Entrée YAML: TLE
-        elif choix_donnees == 1:
+        elif choix_yaml == 1:
 
             tableau = np.zeros((nombre_satellite, 7), dtype=object)
 
@@ -91,6 +91,19 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
                     else:
                         tableau[i][col_idx] = tableau[i][col_idx]
+
+
+            index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
+
+            columns = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Classe_sat', 'a', 'Excentricite']
+
+            df = pd.DataFrame(tableau, columns=columns, index=index)
+
+            with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+
+                print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n',
+                  '=' * 150)
+
 
     # Entrée: Base de données (fichier csv)
     elif choix_donnees == 2:
@@ -127,16 +140,20 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     # Affichage console en table panda pour plus de lisibilité:
 
-    pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
-    pd.set_option('display.max_columns', None)  # None pour afficher toutes les colonnes
+    if choix_donnees == 2 or choix_yaml == 0:
 
-    index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
+        pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
+        pd.set_option('display.max_columns', None)  # None pour afficher toutes les colonnes
 
-    columns = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
-               'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
+        index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
-    df = pd.DataFrame(tableau, columns=columns, index=index)
+        columns = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
+                   'Nom_Satellite', 'Classe_Orbite', 'Type_Orbite', 'Longitude (deg)']
 
-    print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n', '=' * 150)
+        with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+
+            df = pd.DataFrame(tableau, columns=columns, index=index)
+
+            print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n', '=' * 150)
 
     return tableau

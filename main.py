@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
         choix = [
             "Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de "
-            "satellites et/ou Affiche la trace d'un satellite sur la Terre",
+            "satellites et/ou Affiche la zone accessible par l'antenne d'un satellite sur la Terre",
             "Ajouter les données d'un satellite dans la base de données (2)",
             "Modifier des données d'orbite d'un satellite de la base de données (3)", "Quitter le programme (4)"]
         for item in choix:
@@ -167,6 +167,7 @@ if __name__ == '__main__':
                 df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, True)
 
             # Modification de la valeur et affichage de la table modifiee
+
             with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 
                 print('\n', '=' * 150, '\nVoici la table modifiée:\n\n ', df[df['Numero_NORAD'] == numero_NORAD], '\n',

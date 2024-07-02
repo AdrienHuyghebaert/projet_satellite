@@ -79,6 +79,4 @@ class Lire_YAML:
         # Création de tableaux de variables d'entrées:
         donnees_satellite_orbite_TLE = np.array([apogee, perigee, inclinaison, numero_sat, classe_sat, a, excentricite])
 
-        print(a, periode, r_a, r_p, nbr_revolution)
-
         return donnees_satellite_orbite_TLE
