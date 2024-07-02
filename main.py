@@ -141,6 +141,7 @@ if __name__ == '__main__':
             print('\nVoici la table modifiée:\n\n ', df[df['Numero_NORAD'] == numero_NORAD])
 
 
+
         elif choix_action == 4:
             print("\nMerci d'avoir utilisé le programme. Au revoir!")
             break  # Sortir de la boucle et terminer le programme
