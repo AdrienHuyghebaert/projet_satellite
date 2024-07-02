@@ -1,110 +1,147 @@
+# ======================================================================================================================
+# Auteurs: Groupe 5
+# Date: 02/07/2024
+# Programme: Ce programme permet d'utiliser le module projet_satellite avec toutes ses fonctionnalitées
+# ======================================================================================================================
+
 import SatelliteObservation
 import numpy as np
 
+
 if __name__ == '__main__':
+
 
     # Interface utilisateur
 
-    print('=' * 30, "Bienvenue dans notre module sur l'étude des orbites des satellites", '=' * 30, '\n')
-    choix_donnees = SatelliteObservation.get_int_input(
-        'Souhaitez vous entrer les données de votre satellite (1) ou trouver un satellite dans la base de données (2) '
-        '? : \n')
+    titre = "Bienvenue dans notre module sur l'étude des orbites des satellites"
 
-    # Entrée: fichier YAML
-    if choix_donnees == 1:
-        print('Veuillez renseigner les données dans le fichier deck.yaml avant de poursuivre')
-        choix_yaml = (SatelliteObservation.get_int_input
-                      ('Voulez vous utiliser les données satellite (tapez 0) ou bien les données TLE (tapez 1): \n'))
+    SatelliteObservation.afficher_console(titre)
 
-        # Entrée YAML: données satellite
-        if choix_yaml == 0:
-            fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # instanciation objet
-            donnees = fichier_yaml.donnees_satellite()
-            print(donnees[0])
+    liste_parametres = ['Nom_Satellite', 'Numero_NORAD', 'Masse', 'Classe_Orbite', 'Type_Orbite',
+                        'Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite',
+                        'Inclinaison (deg)', 'Periode']
 
-        # Entrée YAML: TLE
-        elif choix_donnees == 1:
-            fichier_yaml_TLE = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')  # instanciation objet
-            donnees = fichier_yaml_TLE.donnees_TLE()
-            print(donnees)
+    while True:
 
-    # Entrée: Base de données (fichier csv)
-    elif choix_donnees == 2:
-        numero_NORAD = SatelliteObservation.get_int_input('Entrez le numéro NORAD du satellite à étudier:')
-        base = SatelliteObservation.BaseDonnees('Entrees/UCS-Satellite-Database 5-1-2023.csv', numero_NORAD)
-        print(base.appel_base_donnees())
+        # Choix de l'action a effectuer
 
-    '''''
-    float = SatelliteObservation.get_float_input('Entrez un float : \n')
-    print(float)
-    entier = SatelliteObservation.get_int_input('Entrez un entier : \n')
-    print(entier)
-    str = SatelliteObservation.get_str_input('Entrez un str : \n')
-    print(str)
+        print("\n\u21D2 Voici les actions possibles de ce programme:\n")
 
-    satellite = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
+        choix = ["Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de satellites et/ou Affiche la trace d'un satellite sur la Terre",
+                 "Ajouter les données d'un satellite dans la base de données (2)",
+                 "Modifier des données d'orbite d'un satellite de la base de données (3)", "Quitter le programme (4)"]
+        for item in choix:
+            print(f"- {item}")
+        choix_action = SatelliteObservation.get_int_input("\n \u21D2 Tapez le numéro de l'action souhaitée: ")
 
-    satellite.tracer_orbite_3d()
-   '''''
 
-satellite_1 = SatelliteObservation.Satellite(10, 10500, 0.9, 5, 50)
-satellite_2 = SatelliteObservation.Satellite(30006, 6, 0.8, 36.9, 40)
-satellite_3 = SatelliteObservation.Satellite(956, 897, 0.7, 90, 4000)
-satellite_4 = SatelliteObservation.Satellite(720, 12, 0.7, 12, 12)
-'''
-afficher_orbite = SatelliteObservation.AffichageOrbiteSatellite(1000,
-                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse
-                                                                (satellite_1)[0],
-                                                                SatelliteObservation.Satellite.calcul_parametres_ellipse
-                                                                (satellite_1)[1],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[0],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[1],
-                                                                SatelliteObservation.Satellite.
-                                                                calcul_coord_ellipse_inclinee(
-                                                                    satellite_1)[2])
+        if choix_action == 1:
 
-afficher_orbite.get_data()
-afficher_orbite.animate()
-'''
-# Affichage de plusieurs orbites
-a_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[0]
-a_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[0]
-a_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[0]
-a_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[0]
-a_satellites = np.array([a_sat_1, a_sat_2, a_sat_3, a_sat_4])
+            # Choix des données d'entrées
 
-b_sat_1 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_1)[1]
-b_sat_2 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_2)[1]
-b_sat_3 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_3)[1]
-b_sat_4 = SatelliteObservation.Satellite.calcul_parametres_ellipse(satellite_4)[1]
-b_satellites = np.array([b_sat_1, b_sat_2, b_sat_3, b_sat_4])
+            choix_donnees = SatelliteObservation.get_int_input(
+                '\n\u21D2 Souhaitez vous entrer les données de votre satellite (YAML) '
+                '(1) ou trouver un satellite dans la base de données (2) ? : \n')
 
-positions_sat_1 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_1)[3]
-positions_sat_2 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_2)[3]
-positions_sat_3 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_3)[3]
-positions_sat_4 = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(satellite_4)[3]
-positions_satellites = np.array([positions_sat_1, positions_sat_2, positions_sat_3, positions_sat_4])
+            nbr_satellite = SatelliteObservation.get_int_input('\n\u2192 Entrez le nombre de satellite que '
+                                                               'vous souhaitez afficher (max 5): \n')
+            donnees_entree = SatelliteObservation.choisir_format_entree(choix_donnees, nbr_satellite)
 
-numeros_NORAD = ['Clelia', 'Baptiste', 'Adrien', 'MGA802']
+            donnees_satellites = np.zeros((len(donnees_entree)))
+            position_satellites = np.zeros((len(donnees_entree), 3, 1000), dtype=object)
 
-# Paramètre qui permet d'afficher ou non les connexions entre les satellites
-afficher_connexions = True
-afficher_terre = True
-afficher_orbite = True
-actions = [afficher_connexions, afficher_terre, afficher_orbite]
-affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(positions_satellites, a_satellites, b_satellites,
-                                                                actions, numeros_NORAD)
-affichage.animate()
+            a_satellites = np.zeros((len(donnees_entree)), dtype=object)
+            b_satellites = np.zeros((len(donnees_entree)), dtype=object)
+            afficher_connexion = SatelliteObservation.get_str_input('\nSouhaitez-vous afficher les connexions (Répondre: True or False)? ')
+            afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)? ')
+            afficher_orbite = SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)? ")
 
-'''
-# Test de la class TraceAntenne
-'''
-# test = SatelliteObservation.Satellite(256, 145, 0.00012, 56, 50)
-# x_pos, y_pos, z_pos = SatelliteObservation.Satellite.calcul_coord_ellipse_inclinee(test)
-# position_sat = [x_pos[567], y_pos[567], z_pos[567]]
-# data = SatelliteObservation.TraceAntenne(position_sat)
-# data.tracer_cercle()
+            for i in range(len(donnees_entree)):
+                satellite = SatelliteObservation.Satellite(donnees_entree[i][0], donnees_entree[i][1], donnees_entree[i][2])
+                position_satellites[i] = satellite.calcul_coord_ellipse_inclinee()[3]
+                a_satellites[i] = satellite.calcul_parametres_ellipse()[0]
+                b_satellites[i] = satellite.calcul_parametres_ellipse()[1]
+            SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites, b_satellites, afficher_connexion, afficher_terre, afficher_orbite)
+
+            # Affichage des orbites avec les paramètres voulus
+
+            affichage = SatelliteObservation.AffichageOrbiteTraceConnexion2(position_satellites, a_satellites,
+                                                                            b_satellites,
+                                                                            afficher_connexion, afficher_terre,
+                                                                            afficher_orbite)
+            affichage.animate()
+
+
+        # Ajout des données d'un satellite dans la base de données (2)
+
+        elif choix_action == 2:
+
+            choix_table = SatelliteObservation.get_str_input(
+                '\n\u2192 Avez-vous déjà modifié/ajouté une orbite de satellite '
+                '\nSi non un fichier csv nommé Base_donnees_satellites_utilisateur.csv sera créé pour vous '
+                '\nRéponse (oui/non): ')
+
+            input("\n\u2192 Pour continuer vous devez renseigner les données de votre satellite dans le fichier deck.yaml "
+                  "\nAppuyez sur Entrée lorsque vous avez terminé de modifier le fichier "
+                  "\nN'oubliez pas de faire 'ctrl + s' pour sauvegarder les modifications !!...")
+
+            fichier_yaml = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
+
+            dictionnaire = fichier_yaml.lecture_fichier()
+            nouveau_dictionnaire = {
+                'SatelliteOrbite': {**dictionnaire.get('Satellite', {}), **dictionnaire.get('Orbite', {})}}
+
+            if choix_table == 'oui':
+                nouvelle_data_frame = SatelliteObservation.AjoutOrbite('Entrees/Base_donnees_satellites_utilisateur.csv')
+                df = nouvelle_data_frame.ajouter_orbite(nouveau_dictionnaire, True)
+
+            elif choix_table == 'non':
+                nouvelle_data_frame = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
+                df = nouvelle_data_frame.ajouter_orbite(nouveau_dictionnaire, False)
+
+            print("\nVoici la table modifiée, votre ajout se trouve en dernière ligne:\n\n", df)
+
+
+        # Modification des données d'un satellite présent dans la base de données (3)
+
+        elif choix_action == 3:
+
+            numero_NORAD = SatelliteObservation.get_int_input(
+                '\n\u2192 Entrez le numéro NORAD du satellite à modifier (5 chiffres): ')
+
+            # Affichage de la liste des paramètres orbite et satellite
+            print('\nVoici la liste des paramètres:\n ')
+
+            for item in liste_parametres:
+                print(f"- {item}")
+
+
+            parametre = SatelliteObservation.get_str_input('\n\u2192 Quel paramètre souhaitez-vous modifier '
+                                                           '(copier-coller le nom dans la liste ci-dessus): ')
+
+            nouvelle_valeur = SatelliteObservation.get_int_input('\n\u2192 Quelle est la nouvelle valeur: ')
+
+            # Instanciation
+
+            choix_table = SatelliteObservation.get_str_input(
+                '\n\u2192 Avez-vous déjà modifié/ajouté une orbite de satellite '
+                '\nSi non un fichier csv nommé Base_donnees_satellites_utilisateur.csv sera créé pour vous '
+                '\nRéponse (oui/non): ')
+
+            if choix_table == 'non':
+                table = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
+                df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, False)
+
+            elif choix_table == 'oui':
+                table = SatelliteObservation.AjoutOrbite('Entrees/Base_donnees_satellites_utilisateur.csv')
+                df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, True)
+
+            # Modification de la valeur et affichage de la table modifiee
+
+            print('\nVoici la table modifiée:\n\n ', df[df['Numero_NORAD'] == numero_NORAD])
+
+
+
+        elif choix_action == 4:
+            print("\nMerci d'avoir utilisé le programme. Au revoir!")
+            break  # Sortir de la boucle et terminer le programme

@@ -1,5 +1,7 @@
-# Ce script contient plusieurs fonctions permettant de s'assurer
-# que le format de donnée que l'utilisateur rentre est le bon
+#Ce script contient plusieurs fonctions permettant de s'assurer
+# que le format de donnée que l'utilisateur rentre est le bon.
+
+'''Flottant'''
 
 def get_float_input(prompt):
     while True:
@@ -17,6 +19,8 @@ def get_float_input(prompt):
 
 
 
+'''Entier'''
+
 def get_int_input(prompt):
     while True:
         # Constantly check if a value was entered followed by Enter
@@ -31,6 +35,8 @@ def get_int_input(prompt):
             print("Invalid input, please try again.")
     return value
 
+
+'''Chaine de caractère'''
 
 def get_str_input(prompt):
     while True:
