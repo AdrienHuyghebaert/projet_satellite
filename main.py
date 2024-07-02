@@ -1,6 +1,6 @@
 # ======================================================================================================================
 # Auteurs: Groupe 5
-# Date: 20/06/2024
+# Date: 02/07/2024
 # Programme: Ce programme permet d'utiliser le module projet_satellite avec toutes ses fonctionnalitées
 # ======================================================================================================================
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
         print("\n\u21D2 Voici les actions possibles de ce programme:\n")
 
-        choix = ["Affichage des orbites (1): Communication entre deux satellites ou Afficher une constellation de satellites ou Affiche la trace d'un satellite sur la Terre",
+        choix = ["Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de satellites et/ou Affiche la trace d'un satellite sur la Terre",
                  "Ajouter les données d'un satellite dans la base de données (2)",
                  "Modifier des données d'orbite d'un satellite de la base de données (3)", "Quitter le programme (4)"]
         for item in choix:
@@ -40,7 +40,7 @@ if __name__ == '__main__':
             # Choix des données d'entrées
 
             choix_donnees = SatelliteObservation.get_int_input(
-                '\n\u21D2 Souhaitez vous entrer les données de votre satellite '
+                '\n\u21D2 Souhaitez vous entrer les données de votre satellite (YAML) '
                 '(1) ou trouver un satellite dans la base de données (2) ? : \n')
 
             nbr_satellite = SatelliteObservation.get_int_input('\n\u2192 Entrez le nombre de satellite que '
@@ -52,9 +52,9 @@ if __name__ == '__main__':
 
             a_satellites = np.zeros((len(donnees_entree)), dtype=object)
             b_satellites = np.zeros((len(donnees_entree)), dtype=object)
-            afficher_connexion = SatelliteObservation.get_str_input('Souhaitez-vous afficher les connexions (Répondre: True or False)?')
-            afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)?')
-            afficher_orbite = SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)?")
+            afficher_connexion = SatelliteObservation.get_str_input('\nSouhaitez-vous afficher les connexions (Répondre: True or False)? ')
+            afficher_terre = SatelliteObservation.get_str_input('Souhaitez-vous afficher la Terre (Répondre: True or False)? ')
+            afficher_orbite = SatelliteObservation.get_str_input("Souhaitez-vous afficher l'orbite (Répondre: True or False)? ")
 
             for i in range(len(donnees_entree)):
                 satellite = SatelliteObservation.Satellite(donnees_entree[i][0], donnees_entree[i][1], donnees_entree[i][2])
