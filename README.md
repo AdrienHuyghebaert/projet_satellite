@@ -1,7 +1,7 @@
 # Projet_Satellite
 ### Projet final du cours MGA802 de l'ETS ###
 
-Auteurs: ADRIEN HUYGHEBAERT - BAPTISTE ROUANET - CLELIA DURANDET
+Auteurs: *ADRIEN HUYGHEBAERT - BAPTISTE ROUANET - CLELIA DURANDET*
 
 **Objectifs :** 
 
