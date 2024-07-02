@@ -72,9 +72,10 @@ Le code contient les packages et les classes suivants:
     - get_user_input: fonction qui permet de récupérer les entrées de l'utilisateur dans la console selon le type (str, int, float)
 - Affichage
     - affichage: permet de gérer tout l'affichage et l'animation des satellites, des orbites, des connexions, des traces et de la Terre
-    - terre: class qui est appelée par affichage (si l'utilisateur souhaite l'afficher) et retourne des lignes 3D formant la Terre
-    - orbite: class qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui calcul les orbites pour des satellites et retourne les lignes 3D correspondantes
-    - connexions_satellites: class qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui détermine si il y a une communication possible entre les satellites et retourne une ligne 3D entre ces 2 derniers si la condition est remplie
+    - terre: classe qui est appelée par affichage (si l'utilisateur souhaite l'afficher) et retourne des lignes 3D formant la Terre
+    - orbite: classe qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui calcul les orbites pour des satellites et retourne les lignes 3D correspondantes
+    - connexions_satellites: classe qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui détermine si il y a une communication possible entre les satellites et retourne une ligne 3D entre ces 2 derniers si la condition est remplie
+    - antenne: classe qui est appelée par affichage (si l'utilisateur souhaite les afficher), qui calcul le cone de vision du satellite et retourne une ligne 3D qui correspond à la trace de ce cone sur la Terre
 
 
 
@@ -91,13 +92,12 @@ L'utilisateur peut choisir entre différentes actions possibles:
 Pour l'action (1) l'utilisateur aura:
 
 2 choix pour les données d'entrée:
-- trouver des satellites dans la base de données csv à partir du numéro NORAD (Le Satellite Catalog Number ou identifiant NORAD est un identifiant à 5 chiffres assigné par les autorités militaires américaines à tout objet placé en orbite autour de la Terre)
-- rentrer lui-même les paramètres d'un satellite dans le fichier YAML ou les données TLE dans le fichier YAML
+- Trouver des satellites dans la base de données csv à partir du numéro NORAD (Le Satellite Catalog Number ou identifiant NORAD est un identifiant à 5 chiffres assigné par les autorités militaires américaines à tout objet placé en orbite autour de la Terre)
+- Rentrer lui-même les paramètres d'un satellite dans le fichier YAML ou les données TLE dans le fichier YAML
 
 3 choix d'affichage:
-- Terre
-- connexions
-- orbites
+- Par défaut le script affiche tout (orbites, connexionns entre satellites, antennes et Terre) mais il peut personnaliser à l'aide de True or False ce qu'il souhaite afficher
+
 
 Pour les actions (2) et (3), l'utilisateur devra rentrer les données du satellite à ajouter/modifier dans le fichier deck.yaml
 Si c'est la première fois qu'il réalise l'une ou l'autre des deux opérations, un fichier csv sera créé dans le dossier 'Entrées' afin de garder la base de données intacte. 
