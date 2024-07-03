@@ -1,0 +1,30 @@
+.. projet_satellite documentation master file, created by
+   sphinx-quickstart on Sun Jun 23 13:24:07 2024.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Bienvenu sur le site de documentation de notre projet_satellite !
+=================================================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   modules
+
+.. image:: _static/image_sat.ppm
+  :width: 200
+  :alt: Alternative text
+
+Ce projet a pour but de tracer l'orbite de plusieurs satellites ainsi que :
+
+- la trace de leur antenne au sol
+- la potentielle connection entre 2 satellites
+- mettre à jour la base de données
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

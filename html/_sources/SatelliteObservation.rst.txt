@@ -1,0 +1,21 @@
+SatelliteObservation package
+============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   SatelliteObservation.DonneesEntree
+   SatelliteObservation.ExtraFunctions
+   SatelliteObservation.Satellite
+   SatelliteObservation.Affichage
+
+Module contents
+---------------
+
+.. automodule:: SatelliteObservation
+   :members:
+   :undoc-members:
+   :show-inheritance:

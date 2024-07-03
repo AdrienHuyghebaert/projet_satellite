@@ -1,0 +1,63 @@
+SatelliteObservation.Affichage package
+======================================
+
+Submodules
+----------
+
+SatelliteObservation.Affichage.affichage module
+-----------------------------------------------
+
+.. automodule:: SatelliteObservation.Affichage.affichage
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.Affichage.antenne module
+---------------------------------------------
+.. image:: _images/antenne.png
+  :width: 600
+  :alt: Alternative text
+
+.. image:: _images/antenne2.png
+  :width: 600
+  :alt: Alternative text
+
+.. automodule:: SatelliteObservation.Affichage.antenne
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.Affichage.connexion\_satellites module
+-----------------------------------------------------------
+.. image:: _images/cas_connexions.png
+  :width: 400
+  :alt: Alternative text
+
+.. automodule:: SatelliteObservation.Affichage.connexion_satellites
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.Affichage.orbite module
+--------------------------------------------
+
+.. automodule:: SatelliteObservation.Affichage.orbite
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.Affichage.terre module
+-------------------------------------------
+
+.. automodule:: SatelliteObservation.Affichage.terre
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: SatelliteObservation.Affichage
+   :members:
+   :undoc-members:
+   :show-inheritance:

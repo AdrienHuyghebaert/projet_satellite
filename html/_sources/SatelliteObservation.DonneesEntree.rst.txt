@@ -1,0 +1,54 @@
+SatelliteObservation.DonneesEntree package
+==========================================
+
+.. image:: _static/ellipse_schema.png
+  :width: 400
+  :alt: Alternative text
+
+.. image:: _images/calculs.png
+  :width: 400
+  :alt: Alternative text
+
+
+Submodules
+----------
+
+SatelliteObservation.DonneesEntree.LecteurYAML module
+-----------------------------------------------------
+
+.. automodule:: SatelliteObservation.DonneesEntree.LecteurYAML
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.DonneesEntree.ajouter\_mettre\_a\_jour\_orbite module
+--------------------------------------------------------------------------
+
+.. automodule:: SatelliteObservation.DonneesEntree.ajouter_mettre_a_jour_orbite
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.DonneesEntree.base\_donnees module
+-------------------------------------------------------
+
+.. automodule:: SatelliteObservation.DonneesEntree.base_donnees
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.DonneesEntree.fichier\_YAML module
+-------------------------------------------------------
+
+.. automodule:: SatelliteObservation.DonneesEntree.fichier_YAML
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: SatelliteObservation.DonneesEntree
+   :members:
+   :undoc-members:
+   :show-inheritance:

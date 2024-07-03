@@ -1,0 +1,25 @@
+SatelliteObservation.Satellite package
+======================================
+
+.. image:: _images/orbites.png
+  :width: 700
+  :alt: Alternative text
+
+Submodules
+----------
+
+SatelliteObservation.Satellite.satellite module
+-----------------------------------------------
+
+.. automodule:: SatelliteObservation.Satellite.satellite
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: SatelliteObservation.Satellite
+   :members:
+   :undoc-members:
+   :show-inheritance:

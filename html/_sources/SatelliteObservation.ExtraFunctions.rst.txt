@@ -1,0 +1,29 @@
+SatelliteObservation.ExtraFunctions package
+===========================================
+
+Submodules
+----------
+
+SatelliteObservation.ExtraFunctions.choix\_donnees\_entree module
+-----------------------------------------------------------------
+
+.. automodule:: SatelliteObservation.ExtraFunctions.choix_donnees_entree
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SatelliteObservation.ExtraFunctions.get\_user\_input module
+-----------------------------------------------------------
+
+.. automodule:: SatelliteObservation.ExtraFunctions.get_user_input
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: SatelliteObservation.ExtraFunctions
+   :members:
+   :undoc-members:
+   :show-inheritance:
