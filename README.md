@@ -68,12 +68,14 @@ Le code contient les 4 packages et les classes suivants:
 - ***DonneesEntree***
   - ajouter_mettre_a_jour_orbite: permet à l'utilisateur d'ajouter les données d'une orbite de satellite dans la base de données ou de modifier les données d'un satellite déjà dans la base
   - base_donnee: permet d'extraire les données d'orbite d'un satellite selon son numéro d'identification NORAD
-  - fichier_YAML: permet de lire le fichier YAML et d'extraire les données pour leur utilisation
+  - fichier_YAML: permet de récupérer les données du fichier YAML et de les extraire pour leur utilisation
+  - lecteur_YAML: permet de lire le fichier YAML
 - ***Satellite***
     - satellite: effectue les calculs des paramètres de l'orbite elliptique à partir des données brutes de la base de données
 - ***ExtraFunctions***
     - choix_donnees_entree: fonction qui permet de renvoyer des tableaux de données des satellites selon le type de données d'entrée choisie par l'utilisateur 
     - get_user_input: fonction qui permet de récupérer les entrées de l'utilisateur dans la console selon le type (str, int, float)
+    - affichage_console: pour l'affichage des titres dans la console utilisateur
 - ***Affichage***
     - affichage: permet de gérer tout l'affichage et l'animation des satellites, des orbites, des connexions, des traces et de la Terre
     - terre: classe qui est appelée par affichage (si l'utilisateur souhaite l'afficher) et retourne des lignes 3D formant la Terre
