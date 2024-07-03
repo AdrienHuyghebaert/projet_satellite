@@ -10,7 +10,7 @@ Tracer l'orbite de plusieurs satellites ainsi que :
 - la potentielle connexion entre 2 satellites
 - mettre à jour la base de données
 
-Tout cela est fait à partir données d'orbites fournies par l'utilisateur ou à partir d'une base de données déjà présente dans le Git. 
+Tout cela est fait à partir d'une base de données déjà présente dans le dépôt Git. 
 
 ## Modules nécessaires :
 
