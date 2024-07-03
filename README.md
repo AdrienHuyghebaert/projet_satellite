@@ -90,7 +90,7 @@ Le code contient les 4 packages et les classes suivants:
 Pour utiliser le programme, l'utilisateur doit lancer le *main*. Toutes les instructions seront affichées dans la console.
 
 L'utilisateur peut choisir entre différentes ***actions*** possibles:
-- Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de satellites et/ou Affiche la trace d'un satellite sur la Terre
+- Affichage des orbites (1): Communication entre deux satellites et/ou Afficher une constellation de satellites et/ou Affiche la zone accessible par l'antenne sur la Terre
 - Ajouter les données d'un satellite dans la base de données (2)
 - Modifier des données d'orbite d'un satellite de la base de données (3)
 - Quitter le programme (4)
