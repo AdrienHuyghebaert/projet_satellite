@@ -52,7 +52,7 @@ class Lire_YAML:
 # Récupère les données TLE du YAML: ====================================================================================
     def donnees_TLE(self):
 
-        # Récupération des données
+        # Récupération des données TLE
 
         parsed_data = self.lecture_fichier()
         ligne_1 = parsed_data["TLE_ligne1"].split()

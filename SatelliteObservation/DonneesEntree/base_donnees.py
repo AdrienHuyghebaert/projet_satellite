@@ -1,4 +1,5 @@
 # ====================================================================================================================
+# Auteurs: Groupe 5
 # Classe: BaseDonnees
 # Date : 02/07/24
 # Fonction: Cette classe permet de gérer la base de données des satellite et de chercher les informations d'un satellite
@@ -10,9 +11,6 @@ import numpy as np
 
 import SatelliteObservation
 
-
-# 28184
-# 33460
 class BaseDonnees:
 
     def __init__(self, nom_base_donnees, NORAD_number):

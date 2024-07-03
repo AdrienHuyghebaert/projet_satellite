@@ -11,6 +11,7 @@ import pandas as pd
 
 
 def choisir_format_entree(choix_donnees, nombre_satellite):
+
     # Entrée: fichier YAML
     if choix_donnees == 1:
         print('\n Veuillez renseigner les données dans le fichier deck.yaml avant de poursuivre')
@@ -75,7 +76,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                 else:
                     input("Appuyez sur Entrée lorsque vous avez terminé de modifier le fichier...")
 
-                    # Réinstancer l'objet de la classe après modification
+                    # Réinstancier l'objet de la classe après modification
 
                     fichier_yaml_TLE = SatelliteObservation.Lire_YAML('Entrees/deck.yaml')
                     donnees = fichier_yaml_TLE.donnees_TLE()
@@ -92,6 +93,7 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
                     else:
                         tableau[i][col_idx] = tableau[i][col_idx]
 
+            # Affichage console des données TLE de l'utilisateur dans une table panda
 
             index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
@@ -101,11 +103,12 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
             with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 
-                print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n',
+                print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) entré(s): \n\n', df, '\n',
                   '=' * 150)
 
 
     # Entrée: Base de données (fichier csv)
+
     elif choix_donnees == 2:
 
         tableau = np.zeros((nombre_satellite, 11), dtype=object)
@@ -142,9 +145,6 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
 
     if choix_donnees == 2 or choix_yaml == 0:
 
-        pd.set_option('display.max_rows', None)  # None pour afficher toutes les lignes
-        pd.set_option('display.max_columns', None)  # None pour afficher toutes les colonnes
-
         index = [f'Satellite {i + 1}' for i in range(nombre_satellite)]
 
         columns = ['Apogee (km)', 'Perigee (km)', 'Inclinaison (deg)', 'Numero_NORAD', 'Masse', 'Periode', 'Excentricite',
@@ -157,3 +157,4 @@ def choisir_format_entree(choix_donnees, nombre_satellite):
             print('\n', '=' * 150, '\n', '\nVoici les données du/des satellite(s) sélectionné(s): \n\n', df, '\n', '=' * 150)
 
     return tableau
+

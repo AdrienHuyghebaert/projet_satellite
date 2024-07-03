@@ -16,9 +16,15 @@ if __name__ == '__main__':
 
     SatelliteObservation.afficher_console(titre)
 
+    # Affichage console pour l'utilisateur
+
     liste_parametres = ['Nom_Satellite', 'Numero_NORAD', 'Masse', 'Classe_Orbite', 'Type_Orbite',
                         'Longitude (deg)', 'Perigee (km)', 'Apogee (km)', 'Excentricite',
                         'Inclinaison (deg)', 'Periode']
+
+    parametres_affichage = ['Terre', 'Orbite', 'Connexions entre satellites', "Zone accessible par l'antenne"]
+
+    # Début du programme
 
     while True:
 
@@ -56,6 +62,11 @@ if __name__ == '__main__':
             actions = [True, True, True, True]
             a_satellites = np.zeros((len(donnees_entree)), dtype=object)
             b_satellites = np.zeros((len(donnees_entree)), dtype=object)
+
+            # Affichage de la liste des paramètres orbite et satellite
+            print("\nVoici la liste des paramètres d'affichage:\n ")
+            for item in parametres_affichage:
+                print(f"- {item}")
 
             choix_affichage = SatelliteObservation.get_str_input(
                 "\n\u2192 Par défault tous les paramètres d'affichage sont sélectionnés, souhaitez-vous définir vos "
@@ -135,36 +146,51 @@ if __name__ == '__main__':
 
         elif choix_action == 3:
 
-            # Récupération du NORAD du satellite à modifier
-            numero_NORAD = SatelliteObservation.get_int_input(
-                '\n\u2192 Entrez le numéro NORAD du satellite à modifier (5 chiffres): ')
+            # Récupération du NORAD du satellite à modifier (vérification de l'existence du NORAD)
+            while True:
 
-            # Affichage de la liste des paramètres orbite et satellite
-            print('\nVoici la liste des paramètres:\n ')
+                objet_classe = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
+                df = objet_classe.traitement_base_donnees()
 
-            for item in liste_parametres:
-                print(f"- {item}")
+                numero_NORAD = SatelliteObservation.get_int_input(
+                    '\n\u2192 Entrez le numéro NORAD du satellite à modifier (5 chiffres): ')
 
-            # Récupération du paramètres à modifier
-            parametre = SatelliteObservation.get_str_input('\n\u2192 Quel paramètre souhaitez-vous modifier '
-                                                           '(copier-coller le nom dans la liste ci-dessus): ')
+                # Si le satellite est bien présent dans la base de données
+                if numero_NORAD in df['Numero_NORAD'].values:
 
-            # Récupération de la nouvelle valeur pour le paramètre sélectionné
-            nouvelle_valeur = SatelliteObservation.get_int_input('\n\u2192 Quelle est la nouvelle valeur: ')
+                    # Affichage de la liste des paramètres orbite et satellite
+                    print('\nVoici la liste des paramètres:\n ')
+                    for item in liste_parametres:
+                        print(f"- {item}")
 
-            # Demande si l'utilisateur a déjà effectué une modification de la base de données
-            choix_table = SatelliteObservation.get_str_input(
-                '\n\u2192 Avez-vous déjà modifié/ajouté une orbite de satellite '
-                '\nSi non un fichier csv nommé Base_donnees_satellites_utilisateur.csv sera créé pour vous '
-                '\nRéponse (oui/non): ')
+                    # Récupération du paramètres à modifier
+                    parametre = SatelliteObservation.get_str_input('\n\u2192 Quel paramètre souhaitez-vous modifier '
+                                                                   '(copier-coller le nom dans la liste ci-dessus): ')
 
-            if choix_table == 'non':
-                table = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
-                df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, False)
+                    # Récupération de la nouvelle valeur pour le paramètre sélectionné
+                    nouvelle_valeur = SatelliteObservation.get_int_input('\n\u2192 Quelle est la nouvelle valeur: ')
 
-            elif choix_table == 'oui':
-                table = SatelliteObservation.AjoutOrbite('Entrees/Base_donnees_satellites_utilisateur.csv')
-                df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, True)
+                    # Demande si l'utilisateur a déjà effectué une modification de la base de données
+                    choix_table = SatelliteObservation.get_str_input(
+                        '\n\u2192 Avez-vous déjà modifié/ajouté une orbite de satellite '
+                        '\nSi non un fichier csv nommé Base_donnees_satellites_utilisateur.csv sera créé pour vous '
+                        '\nRéponse (oui/non): ')
+
+                    # Création de la table utilisateur
+                    if choix_table == 'non':
+                        table = SatelliteObservation.AjoutOrbite('Entrees/UCS-Satellite-Database 5-1-2023.csv')
+                        df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, False)
+
+                    # Utilisation de la table utilisateur déjà créée
+                    elif choix_table == 'oui':
+                        table = SatelliteObservation.AjoutOrbite('Entrees/Base_donnees_satellites_utilisateur.csv')
+                        df = table.modifier_orbite(parametre, numero_NORAD, nouvelle_valeur, True)
+
+                    break
+
+                else:
+
+                    print("Ce numéro n'existe pas dans la base de données veuillez réessayer !")
 
             # Modification de la valeur et affichage de la table modifiee
 
@@ -176,5 +202,6 @@ if __name__ == '__main__':
         # Sortie de la boucle et fin du programme
 
         elif choix_action == 4:
-            print("\nMerci d'avoir utilisé le programme. Au revoir!")
+            titre_fin = "Merci d'avoir utilisé le programme. Au revoir!"
+            SatelliteObservation.afficher_console(titre_fin)
             break

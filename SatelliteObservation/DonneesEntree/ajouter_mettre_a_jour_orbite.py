@@ -1,6 +1,7 @@
 # ==============================================================================================================
+# Auteurs: Groupe 5
 # Classe: AjoutOrbite
-# Cette classe permet d'ajouter les paramètres d'orbite d'un satellite ou de modifier les
+# Fonction: Cette classe permet d'ajouter les paramètres d'orbite d'un satellite ou de modifier les
 # paramètres d'un satellite déjà présent dans la base de données
 # Cette fonctionnalité est possible à partir du fichier YAML et de la data frame créée à partir du fichier csv.
 # ===============================================================================================================
@@ -92,6 +93,7 @@ class AjoutOrbite:
             df = self.traitement_base_donnees()
 
         df.loc[df['Numero_NORAD'] == numero_NORAD, nom_colonne] = valeur_modifiee
+
 
         nom_fichier_csv = 'Base_donnees_satellites_utilisateur.csv'
 
